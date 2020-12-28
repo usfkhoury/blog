@@ -1,4 +1,4 @@
-baseurl = "https://www.usfkhoury.com/"
+baseurl = "/"
 languageCode = "en-us"
 title = "Youssef El Khoury"
 theme = "hugo-future-imperfect"
