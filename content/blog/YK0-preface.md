@@ -1,7 +1,7 @@
 ---
 title: "Yawmiyet Khebbez (Part 0): Preface"
 date: 2020-12-27T21:51:03Z
-draft: true
+draft: false
 categories: ["Yawmiyet Khebbez"]
 type: "post"
 ---
