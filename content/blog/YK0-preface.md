@@ -25,7 +25,7 @@ I've discussed above how helping out my teta was the reason I started baking in 
 Although I've realized that baking by feel is a skill one must learn and develop, as the amazing feeling of getting a good bake without using a scale or any specific measurements makes you feel like you actually understand the properties of the dough and the baking process on an internal level. But this technique has the downside of not being able to easily experiment with variations on recipes, since you won't be able to accurately compare recipe modifications and understand the reason for the change in the final product.
 
 This is why I'm creating a system that will easily allow me to compare recipes and different types of baked goods. To note that, this template will surely evolve and get optimized as necessary over time.
-### Template (version 1)
+### Template
 Since one of the main purposes of this blog is to keep track of recipes, each post will include a table containing all the optimal specifications of a given recipe for quick access, as well as the same specifications of any recipe modifications, so as I experiment with new tweeks on a given recipe, the table will be updated with these changes.
 
 The table will include the below basic properties, as well as any other miscellaneous notes:
