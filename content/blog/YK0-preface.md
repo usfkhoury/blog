@@ -49,5 +49,5 @@ The table will include the below basic properties, as well as any other miscella
 |**Hydration Rate**|**61%**|**63%**|
 |**Oven Specs**|||
 |Temperature|200&deg;C|200&deg;C|
-|Steam|Yes|Yes|
+|Steam|Yes|No|
 |Baking Time|30-40 minutes|30-40 minutes|
