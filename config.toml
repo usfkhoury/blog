@@ -57,7 +57,7 @@ canonifyURLs = true
   # files by adding the value, "default".
   # customCSS            = ["default", "/path/to/file"]
   # customJS             = ["default", "/path/to/file"]
-  customCSS            = ["default"]
+  customCSS            = ["default","css/main.css"]
   customJS             = ["default"]
 
   # options for highlight.js (version, additional languages, and theme)
