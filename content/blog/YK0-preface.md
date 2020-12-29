@@ -36,18 +36,18 @@ The table will include the below basic properties, as well as any other miscella
 
 | | Batch 1 | Batch 2 |
 |-| ------- | ------- |
-|Ingredients|696g|688g|
+|**Ingredients**|**696g**|**688g**|
 |White Flour|274g|200g|
 |Brown Flour|134g|200g|
 |Water|250g|250g|
 |Sugar|13g|13g|
 |Olive Oil|17g|17g|
 |Salt|8g|8g|
-|Flour Type Distribution|408g|400g|
+|**Flour Type Distribution**|**408g**|**400g**|
 |White Flour|67%|50%|
 |Brown Flour|33%|50%|
-|Hydration Rate|61|63|
-|Oven Specs|||
+|**Hydration Rate**|**61%**|**63%**|
+|**Oven Specs**|||
 |Temperature|200&deg;C|200&deg;C|
 |Steam|Yes|Yes|
 |Baking Time|30-40 minutes|30-40 minutes|
