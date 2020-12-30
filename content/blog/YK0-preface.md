@@ -7,7 +7,7 @@ type: "post"
 ---
 
 ## How It All Started
-I'm creating this blog to first, remind future me of why I chose to spend so much time and effort to develop this hobby, and second, to document and track my progress as well as any notes and tips that I experience throughout this journey.
+I'm creating this blog to first, remind future me of why I chose to spend so much time and effort developing this hobby, and second, to document and track my progress as well as any notes and tips that I experience throughout this journey.
 
 So whenever you forget why you started baking, and why you chose it as your hobby, please ready the below:
 
@@ -34,7 +34,8 @@ The table will include the below basic properties, as well as any other miscella
 + Flour type distrbution, if multiple types of flour are used
 + Oven baking specifications, including: temperature, steam, baking time, etc.
 
-| | Batch 1 | Batch 2 |
+For Example this is an example of a recipe table I'll be using:
+| | Experiment 1 | Experiment 2 |
 |-| ------- | ------- |
 |**Ingredients**|**696g**|**688g**|
 |White Flour|274g|200g|
