@@ -34,20 +34,20 @@ The table will include the below basic properties, as well as any other miscella
 + Flour type distrbution, if multiple types of flour are used
 + Oven baking specifications, including: temperature, steam, baking time, etc.
 
-For Example this is an example of a recipe table I'll be using:
+For example this would be an example of a table for a recipe where I experimented with two different hydration levels:
 | | Experiment 1 | Experiment 2 |
 |-| ------- | ------- |
-|**Ingredients**|**696g**|**688g**|
-|White Flour|274g|200g|
-|Brown Flour|134g|200g|
-|Water|250g|250g|
+|**Ingredients**|**696g**|**696g**|
+|White Flour|274g|274g|
+|Brown Flour|134g|134g|
+|Water|250g|300g|
 |Sugar|13g|13g|
 |Olive Oil|17g|17g|
 |Salt|8g|8g|
-|**Flour Type Distribution**|**408g**|**400g**|
-|White Flour|67%|50%|
-|Brown Flour|33%|50%|
-|**Hydration Rate**|**61%**|**63%**|
+|**Flour Type Distribution**|**408g**|**408g**|
+|White Flour|67%|67%|
+|Brown Flour|33%|33%|
+|**Hydration Rate**|**61%**|**73%**|
 |**Oven Specs**|||
 |Temperature|200&deg;C|200&deg;C|
 |Steam|Yes|No|
