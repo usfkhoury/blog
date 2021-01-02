@@ -26,7 +26,7 @@ Although I've realized that baking by feel is a skill one must learn and develop
 
 This is why I'm creating a system that will easily allow me to compare recipes and different types of baked goods. To note that, this template will surely evolve and get optimized as necessary over time.
 ### Template
-Since one of the main purposes of this blog is to keep track of recipes, each post will include a table containing all the optimal specifications of a given recipe for quick access, as well as the same specifications of any recipe modifications, so as I experiment with new tweeks on a given recipe, the table will be updated with these changes.
+Since one of the main purposes of this blog is to keep track of recipes, each post will include a table containing all the optimal specifications of a given recipe for quick access. Also, as I experiment with new tweeks on a given recipe, a column will be added to the table with the modification to that recipe.
 
 The table will include the below basic properties, as well as any other miscellaneous notes:
 + Ingredient measurements by weight and volume, although weight measurements are preferred **(explanation comming soon)**, both metrics will be listed
@@ -34,7 +34,7 @@ The table will include the below basic properties, as well as any other miscella
 + Flour type distrbution, if multiple types of flour are used
 + Oven baking specifications, including: temperature, steam, baking time, etc.
 
-For example this would be an example of a table for a recipe where I experimented with two different hydration levels:
+For instance, this would be an example of a table for a recipe where I experimented with two different hydration levels:
 | | Experiment 1 | Experiment 2 |
 |-| ------- | ------- |
 |**Ingredients**|**696g**|**696g**|
