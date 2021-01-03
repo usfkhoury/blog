@@ -52,3 +52,6 @@ For instance, this would be an example of a table for a recipe where I experimen
 |Temperature|200&deg;C|200&deg;C|
 |Steam|Yes|No|
 |Baking Time|30-40 minutes|30-40 minutes|
+
+Following the above mentioned table, the post will proceed by listing some high level explaination of the recipe instructions formated as a gantt chart, showing the typical preparation progression of each step.
+This chart would look something like this:
