@@ -1991,14 +1991,14 @@
 
 	@media screen and (min-width: 715px) {
 
-		table > tbody > tr:hover > td,
-		table > tbody > tr:hover > th {
-			background-color: RGBA(46, 186, 174, .3);
-		}
-
 		table > tbody > tr:nth-child(even) > td,
 		table > tbody > tr:nth-child(even) > th {
 			background-color: #f4f4f4;
+		}
+		
+		table > tbody > tr:hover > td,
+		table > tbody > tr:hover > th {
+			background-color: RGBA(46, 186, 174, .3);
 		}
 	}
 

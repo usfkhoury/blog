@@ -53,5 +53,26 @@ For instance, this would be an example of a table for a recipe where I experimen
 |Steam|Yes|No|
 |Baking Time|30-40 minutes|30-40 minutes|
 
-Following the above mentioned table, the post will proceed by listing some high level explaination of the recipe instructions formated as a gantt chart, showing the typical preparation progression of each step.
+Following the above mentioned table, the post will proceed by listing a high level breakdown of the recipe formated as a gantt chart, showing the typical progression of the recipe progression.
 This chart would look something like this:
+
+{{< mermaid >}}
+gantt
+	dateFormat  DD-HH:mm
+	axisFormat  Day%e-%I:%M
+	title Example Bread Timeline
+	section Preparation
+		Heat Water               :prep1, 01-08:00, 10m
+		Mix Ingredients      	 :prep2, 01-08:00, 10m
+		Check Yeast				 :prep3, after prep2, 10m
+		Knead Dough				 :prep4, after prep3, 10m
+	section Resting
+		First Rest				 :rest1, after prep4, 2h
+		Second Rest				 :rest2, after shape2, 1h
+	section Shaping
+		Pre Shape				 :shape1, after rest1, 30m
+		Final Shape				 :shape2, after shape1, 10m
+	section Baking
+		Baking				 	 :bake1, after rest2, 1h
+{{< /mermaid >}}
+
