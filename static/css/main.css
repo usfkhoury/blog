@@ -1936,7 +1936,6 @@
 	    }
 
 /* Table */
-
 	table {
 		text-align: center;
 		width: 90%;
@@ -1990,7 +1989,7 @@
 					}
 
 	@media screen and (min-width: 715px) {
-
+		
 		table > tbody > tr:nth-child(even) > td,
 		table > tbody > tr:nth-child(even) > th {
 			background-color: #f4f4f4;

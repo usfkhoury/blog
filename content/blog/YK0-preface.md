@@ -7,9 +7,9 @@ type: "post"
 ---
 
 ## How It All Started
-I'm creating this blog to first, remind future me of why I chose to spend so much time and effort developing this hobby, and second, to document and track my progress as well as any notes and tips that I experience throughout this journey.
+I'm creating this blog to first, remind future me of why I chose to spend so much time and effort developing this hobby, and second, to document and track my progress as well as any notes and tips that I experience throughout this journey. So whenever you forget why you started baking, and why you chose it as your hobby, please read this post.
 
-So whenever you forget why you started baking, and why you chose it as your hobby, please ready the below:
+<!--more-->
 
 Badde yek tetzakkar ma3e lamma kent tou3a l soboh 3a settak l 3omra 75 sene, we3e 3al 5 wej l daw la te3joun w tekhbouz 2atyab mna2ish bayd b2awarma, kechk, zaatar. Aw lamma ykoun sarla yawmen bt na22ich maamoul w kaak, w 2adde enta bt koun mcha7ri2 yokhlas l syem la tekeloun 3al 3id. Aw kamen ri7it l ale li btekhnou2 bl bayt 3al ghtas lamma tkoun 3am te2le maakron w ouwaymet. 
 
@@ -35,25 +35,26 @@ The table will include the below basic properties, as well as any other miscella
 + Oven baking specifications, including: temperature, steam, baking time, etc.
 
 For instance, this would be an example of a table for a recipe where I experimented with two different hydration levels:
-| | Experiment 1 | Experiment 2 |
-|-| ------- | ------- |
-|**Ingredients**|**696g**|**696g**|
-|White Flour|274g|274g|
-|Brown Flour|134g|134g|
-|Water|250g|300g|
-|Sugar|13g|13g|
-|Olive Oil|17g|17g|
-|Salt|8g|8g|
-|**Flour Type Distribution**|**408g**|**408g**|
-|White Flour|67%|67%|
-|Brown Flour|33%|33%|
-|**Hydration Rate**|**61%**|**73%**|
-|**Oven Specs**|||
-|Temperature|200&deg;C|200&deg;C|
-|Steam|Yes|No|
-|Baking Time|30-40 minutes|30-40 minutes|
 
-Following the above mentioned table, the post will proceed by listing a high level breakdown of the recipe formated as a gantt chart, showing the typical progression of the recipe progression.
+|							|                           | Experiment 1 | Experiment 2 |
+| ------------------------- | ------------------------- | ------------ | ------------ |
+|**Ingredients**			|							|**696g**      |**696g**      |
+|							|White Flour    			|274g          |274g          |
+|							|Brown Flour    			|134g          |134g          |
+|							|Water						|250g		   |300g		  |
+|							|Sugar						|13g		   |13g			  |
+|							|Olive Oil      			|17g           |17g           |
+|							|Salt           			|8g            |8g 			  |
+|**Flour Type Distribution**|							|**408g**	   |**408g**	  |
+|							|White Flour				|67%		   |67%			  |
+|							|Brown Flour				|33%		   |33%			  |
+|**Hydration Rate**			|							|**61%**	   |**73%**		  |
+|**Oven Specs**				|							|
+|							|Temperature				|200&deg;C	   |200&deg;C	  |
+|							|Steam						|Yes		   |No		      |
+|							|Baking Time				|30-40 minutes |30-40 minutes |
+
+Following the above mentioned table, the post will proceed by listing a high level breakdown of the recipe, formated as a gantt chart, showing the typical progression of the recipe progression.
 This chart would look something like this:
 
 {{< mermaid >}}
@@ -76,3 +77,4 @@ gantt
 		Baking				 	 :bake1, after rest2, 1h
 {{< /mermaid >}}
 
+And finally, the post will include any notes that I have on each experiment and on the recipe in general.
