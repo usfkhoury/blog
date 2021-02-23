@@ -22,7 +22,7 @@ math: true
 |**Flour Type Distribution**|**Total**					|**NA**	   					|**NA**	  					|
 |							|White Flour				|83%		   				|83%			  			|
 |							|Brown Flour				|17%		   				|17%			  			|
-|**Hydration Rate**			|							|**64%**	   				|**128%**		  			|
+|**Hydration Rate**			|							|**63%**	   				|**126%**		  			|
 |**Oven Specs**				|							|
 |							|Temperature				|Max Temp	   				|Max Temp	  				|
 |							|Baking Time				|Until puff and a bit brown |Until puff and a bit brown |
@@ -58,11 +58,27 @@ Let's first define the below variables:
 TL;DR: The hydration rate can't be computed with volume measurements since 1 cup of water is not equivalent to 1 cup of flour.
 
 If we take for example both experiment A and experiment B of the above pita bread recipe, and assume for simplicity that the weight of white flour and brown flour is the same, we get the below hydration rate calculations:
-* Using Volume: \\( {\text{1 cup Water} \over \text{3 cups Flour}}*100=33\text{%} \\)
+* Using Volume: \\( \frac{\text{1 cup Water}}{\text{3 cups Flour}}*100 = 33\text{%} \\)
 
-* Using Weight: \\( {\text{250g Water} \over 3*\text{132g Flour}}*100=63\text{%} \\)
+* Using Weight: \\( \frac{\text{250g Water}}{3*\text{132g Flour}}*100 = 63\text{%} \\)
 
 Unfortunately, I had to learn this the hard way when trying to experiment with higher hydration rates for the pita bread recipe (experiment B). This is what happened:
 
-The initial recipe (experiment A) was prepared using volume measurements, so I though I could compute the hydration rate with volume measurements 
+The initial recipe (experiment A) was prepared using volume measurements, so I though I could compute the hydration rate with volume measurements which was computed to be 33% (as shown above). I then decided to experiment with a hydration rate of 60% by performing the following calculation to get the number of cups of water that I should use:
+$$ {\text{x cup Water} \over \text{3 cups Flour}} = 60\text{%} \Rightarrow x = 1.8 \approx \text{2 cups Water}$$
 
+So using the above calculation, the resulting dough was way too sticky and took forever to knead even after adding additional flour. After adding more flour gradually and kneading fo even more time, the final shaped dough was very delicate and teared constantly and easily while rolling, resulting in pitas that don't puff up as well in the oven.
+
+After going through my calculations and redoing them using weight measurements instead of volume, the reason experiment B turned out like it did became apparent as seen in the new weight-based hydration rate:
+* Experiment A: \\( \frac{\text{1 cup Water}}{\text{3 cups Flour}}*100 \Leftrightarrow \frac{\text{250g Water}}{3\*\text{132g Flour}}*100 = 63\text{%} \\)
+
+* Experiment B: \\( \frac{\text{2 cup Water}}{\text{3 cups Flour}}*100 \Leftrightarrow \frac{\text{500g Water}}{3\*\text{132g Flour}}*100 = 126\text{%} \\)
+
+So, it turned out that the original recipe (experiment A) was already 63% not 33% hydration, and I was experimenting (experiment B) with 126% hydration which is way too much for pita bread.
+
+As a conclusion, you should always use weight measurements to compute hydration rates, and also, whenever you want to convert from weight to volume measurements and vice versa, make sure to note the density of the ingredient since \\( \rho = \frac{m}{V} \\), so for example:
+* For water, the density is \\( 997kg/m^3 \\), so 1Kg of water is equivalent to \\( \frac{m}{\rho} = \frac{1kg}{997kg/m^3} = 0.001m^3 = 1L \\)
+
+* For flour, the density is on average \\( 0.593g/cm^3 \\), so 1Kg of water is equivalent to \\( \frac{m}{\rho} = \frac{1000g}{0.593g/cm^3} = 1686cm^3 = 1.686L \\)
+
+Using the above density formula you can get a rough estimate on the volumetric to weight ratio of any ingredient. To note that, some variability will apply in the real world due to the hundreds of variables that could affect density, such as, humidity, temperature, flour type, whether you sift your flour or not, etc.
