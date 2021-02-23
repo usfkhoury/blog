@@ -29,6 +29,7 @@
       <script src="{{ "js/util.js" | relURL }}"></script>
       <script src="{{ "js/main.js" | relURL }}"></script>
       <script src="{{ "js/backToTop.js" | relURL }}"></script>
+	  
 	  <!-- This enables the use of Mermaid shortcode by rendering it from the client-side -->
 	  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 	  <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'}});</script>
@@ -43,7 +44,7 @@
     {{ end }}
 
     <!-- This is called by default since this theme uses highlight.js -->
-    <script>hljs.initHighlightingOnLoad();</script>
+    <<script>hljs.initHighlightingOnLoad();</script>
       {{ partial "footer_mathjax" . }}
   </body>
 </html>

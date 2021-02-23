@@ -36,16 +36,16 @@ The table will include the below basic properties, as well as any other miscella
 
 For instance, this would be an example of a table for a recipe where I experimented with two different hydration levels:
 
-|							|                           | Experiment 1 | Experiment 2 |
+|							|                           | Experiment A | Experiment B |
 | ------------------------- | ------------------------- | ------------ | ------------ |
-|**Ingredients**			|							|**696g**      |**696g**      |
+|**Ingredients**			|**Total**					|**696g**      |**696g**      |
 |							|White Flour    			|274g          |274g          |
 |							|Brown Flour    			|134g          |134g          |
 |							|Water						|250g		   |300g		  |
 |							|Sugar						|13g		   |13g			  |
 |							|Olive Oil      			|17g           |17g           |
 |							|Salt           			|8g            |8g 			  |
-|**Flour Type Distribution**|							|**408g**	   |**408g**	  |
+|**Flour Type Distribution**|**Total**					|**408g**	   |**408g**	  |
 |							|White Flour				|67%		   |67%			  |
 |							|Brown Flour				|33%		   |33%			  |
 |**Hydration Rate**			|							|**61%**	   |**73%**		  |
