@@ -1,6 +1,6 @@
 ---
 title: "Yawmiyet Khebbez (Part 1): Khebez Arabe (Pita Bread) - الخبز العربي"
-date: November 22, 2023 4:51 PM
+date: 2020-12-27T21:51:03Z
 draft: false
 categories: ["Yawmiyet Khebbez"]
 type: "post"
