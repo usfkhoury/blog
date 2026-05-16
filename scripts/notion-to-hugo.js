@@ -20,7 +20,10 @@ function slugify(text) {
 }
 
 function isoDate(str) {
-  return str ? new Date(str).toISOString() : new Date().toISOString();
+  const d = str ? new Date(str) : new Date();
+  // Hugo 0.78.2 uses Go's time.RFC3339 parser which rejects milliseconds.
+  // Strip the sub-second part so "2023-12-19T20:43:00.000Z" → "2023-12-19T20:43:00Z".
+  return d.toISOString().replace(/\.\d{3}Z$/, 'Z');
 }
 
 function buildFrontmatter(props) {
