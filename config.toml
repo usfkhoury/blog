@@ -27,7 +27,9 @@ enableRobotsTXT = true
   math = false
   toc = true
   readingTime = true
-  license = false
+
+[params.article.license]
+  enabled = false
 
 [params.comments]
   enabled = false
@@ -57,7 +59,7 @@ enableRobotsTXT = true
   url = "/blog/"
   weight = 2
   [menu.main.params]
-    icon = "archive"
+    icon = "archives"
 
 [[menu.main]]
   identifier = "categories"
