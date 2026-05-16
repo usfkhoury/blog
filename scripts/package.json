@@ -1,0 +1,12 @@
+{
+  "name": "notion-to-hugo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sync": "node notion-to-hugo.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "notion-to-md": "^3.1.1"
+  }
+}
