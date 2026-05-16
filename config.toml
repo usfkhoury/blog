@@ -1,5 +1,5 @@
 baseurl = "https://usfkhoury.com/"
-languageCode = "en-us"
+locale = "en-us"
 title = "Youssef El Khoury"
 theme = "hugo-theme-stack"
 paginate = 5
@@ -21,11 +21,7 @@ enableRobotsTXT = true
 [params.sidebar]
   subtitle = "My personal blog, exploring and documenting the Lebanese tradition of doing things yourself"
   compact = false
-
-[params.sidebar.avatar]
-  enabled = true
-  local = false
-  src = "/images/main/logo.jpg"
+  avatar = "https://usfkhoury.com/images/main/logo.jpg"
 
 [params.article]
   math = false
