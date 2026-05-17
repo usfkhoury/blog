@@ -1,0 +1,5 @@
+# Notion database IDs — one per line.
+# Run scripts/update_notion_secret.sh after editing to push the updated list to GitHub.
+# Lines starting with # and blank lines are ignored.
+3c07dd24ae4845aaaa8f2c186103acd7
+44f1b78cd07f441ca1256116ea58b9d0

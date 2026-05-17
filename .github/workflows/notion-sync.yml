@@ -27,6 +27,11 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Load database IDs
+        run: |
+          IDS="$(grep -v '^\s*#' .notion-databases | grep -v '^\s*$' | tr '\n' ',' | sed 's/,$//')"
+          echo "NOTION_DATABASE_ID=$IDS" >> "$GITHUB_ENV"
+
       - name: Install dependencies
         working-directory: scripts
         run: npm install
@@ -35,7 +40,6 @@ jobs:
         working-directory: scripts
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: node notion-to-hugo.js
 
       - name: Commit and push changes

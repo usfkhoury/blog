@@ -46,14 +46,16 @@ blog/
 │   └── page/
 │       └── search/         Search page (must not be deleted)
 ├── scripts/
-│   ├── notion-to-hugo.js   Sync script
-│   ├── package.json        Node dependencies
-│   └── .gitignore          Excludes node_modules/
+│   ├── notion-to-hugo.js        Sync script
+│   ├── update_notion_secret.sh  Pushes .notion-databases to the GitHub secret
+│   ├── package.json             Node dependencies
+│   └── .gitignore               Excludes node_modules/
 ├── static/
 │   └── images/main/
 │       └── logo.jpg        Avatar image shown in the sidebar
 ├── themes/
 │   └── hugo-theme-stack/   Theme (git submodule — do not edit directly)
+├── .notion-databases       Source-of-truth list of Notion database IDs (one per line)
 ├── config.toml             All Hugo and theme settings
 └── netlify.toml            Netlify build configuration
 ```
@@ -89,11 +91,24 @@ blog/
 
 1. In Notion, create a new database (e.g. **Woodworking**) with the same property columns as the existing ones: **Published** (checkbox), **Categories** (multi-select), **Tags** (multi-select), **Date** (date), **Slug** (text).
 2. Find the new database's ID — open it in a browser; the ID is the 32-character string in the URL (the part after the last `/` and before any `?`).
-3. In your GitHub repository go to **Settings → Secrets and variables → Actions** and edit the `NOTION_DATABASE_ID` secret. Append the new database ID, separated by a comma:
+3. Add the ID to `.notion-databases` at the repo root (one ID per line, lines starting with `#` are ignored):
    ```
-   existing-db-id-1,existing-db-id-2,new-woodworking-db-id
+   existing-db-id-1
+   existing-db-id-2
+   new-woodworking-db-id
    ```
-4. Trigger a [manual sync](#triggering-a-manual-sync) to confirm it works. Pages from the new database will be tagged **Woodworking** automatically.
+4. Commit and push the file — the workflow reads it automatically on every run, no secret update required.
+5. Trigger a [manual sync](#triggering-a-manual-sync) to confirm it works. Pages from the new database will be tagged **Woodworking** automatically.
+
+---
+
+## Managing database IDs
+
+The file `.notion-databases` (repo root) lists every Notion database that the sync pipeline reads from, one ID per line. Lines starting with `#` are treated as comments.
+
+To add, remove, or reorder IDs: edit the file and push. The GitHub Actions workflow parses it at the start of every sync run — no secret update, no script needed.
+
+The `NOTION_DATABASE_ID` GitHub secret is no longer used by the workflow and can be deleted.
 
 ---
 
@@ -128,7 +143,7 @@ This writes Markdown files into `content/blog/`. Run `hugo server` from the repo
 | Secret name | Where to get it | Notes |
 |---|---|---|
 | `NOTION_TOKEN` | Notion → Settings → Connections → Develop or manage integrations → create an integration → copy the **Internal Integration Secret** | The integration must be added to each database you want to sync (open the database in Notion → ··· → Connect to → your integration) |
-| `NOTION_DATABASE_ID` | The URL of the database page in Notion, e.g. `notion.so/workspace/`**`abc123…`** | Supports multiple IDs comma-separated: `id1,id2,id3` |
+| ~~`NOTION_DATABASE_ID`~~ | _(no longer needed)_ | IDs are now read from `.notion-databases` in the repo; this secret can be deleted |
 
 Both secrets must be set at **GitHub → repository → Settings → Secrets and variables → Actions**.
 
