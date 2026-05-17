@@ -21,8 +21,7 @@ function slugify(text) {
 
 function isoDate(str) {
   const d = str ? new Date(str) : new Date();
-  // Hugo 0.78.2 uses Go's time.RFC3339 parser which rejects milliseconds.
-  // Strip the sub-second part so "2023-12-19T20:43:00.000Z" → "2023-12-19T20:43:00Z".
+  // Hugo's time.RFC3339 parser rejects milliseconds — strip sub-second part.
   return d.toISOString().replace(/\.\d{3}Z$/, 'Z');
 }
 
@@ -40,17 +39,17 @@ function buildFrontmatter(props) {
   return lines.join('\n') + '\n\n';
 }
 
-async function getDatabaseTitle() {
-  const db = await notion.databases.retrieve({ database_id: process.env.NOTION_DATABASE_ID });
+async function getDatabaseTitle(databaseId) {
+  const db = await notion.databases.retrieve({ database_id: databaseId });
   return Array.isArray(db.title) ? db.title.map(t => t.plain_text).join('') : '';
 }
 
-async function getPublishedPages() {
+async function getPublishedPages(databaseId) {
   const pages = [];
   let cursor;
   do {
     const res = await notion.databases.query({
-      database_id: process.env.NOTION_DATABASE_ID,
+      database_id: databaseId,
       filter: { property: 'Published', checkbox: { equals: true } },
       ...(cursor ? { start_cursor: cursor } : {}),
     });
@@ -114,16 +113,12 @@ function readNotionId(filePath) {
   }
 }
 
-async function main() {
-  if (!process.env.NOTION_TOKEN)       throw new Error('NOTION_TOKEN is not set');
-  if (!process.env.NOTION_DATABASE_ID) throw new Error('NOTION_DATABASE_ID is not set');
-
-  fs.mkdirSync(CONTENT_DIR, { recursive: true });
-
-  const [pages, dbTitle] = await Promise.all([getPublishedPages(), getDatabaseTitle()]);
+async function syncDatabase(databaseId, syncedPageIds) {
+  const [pages, dbTitle] = await Promise.all([
+    getPublishedPages(databaseId),
+    getDatabaseTitle(databaseId),
+  ]);
   console.log(`Found ${pages.length} published page(s) in Notion database "${dbTitle}".`);
-
-  const syncedPageIds = new Set();
 
   for (const page of pages) {
     const props = extractProps(page);
@@ -141,6 +136,25 @@ async function main() {
     const filePath = path.join(CONTENT_DIR, `${props.slug}.md`);
     fs.writeFileSync(filePath, buildFrontmatter(props) + body, 'utf8');
     syncedPageIds.add(page.id);
+  }
+}
+
+async function main() {
+  if (!process.env.NOTION_TOKEN)       throw new Error('NOTION_TOKEN is not set');
+  if (!process.env.NOTION_DATABASE_ID) throw new Error('NOTION_DATABASE_ID is not set');
+
+  // Support a single ID or a comma-separated list of IDs
+  const databaseIds = process.env.NOTION_DATABASE_ID
+    .split(',')
+    .map(id => id.trim())
+    .filter(Boolean);
+
+  fs.mkdirSync(CONTENT_DIR, { recursive: true });
+
+  const syncedPageIds = new Set();
+
+  for (const databaseId of databaseIds) {
+    await syncDatabase(databaseId, syncedPageIds);
   }
 
   // Delete files that were previously synced from Notion but are no longer published.
