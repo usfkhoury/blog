@@ -17,7 +17,7 @@ scripts/notion-to-hugo.js   ← fetches published pages, writes Markdown files
     ▼
 content/blog/*.md           ← Hugo source files
     │
-    │  Netlify detects push, runs `hugo --gc --minify`
+    │  workflow calls Netlify deploy hook, runs `hugo --gc --minify`
     ▼
 usfkhoury.com               ← live site
 ```
@@ -116,7 +116,7 @@ To add, remove, or reorder IDs: edit the file and push. The GitHub Actions workf
 2. Click **Actions** → **Sync Notion to Hugo**.
 3. Click **Run workflow** → **Run workflow**.
 
-The sync runs and, if anything changed, pushes a commit to `main` which triggers a Netlify deploy.
+The sync runs and, if anything changed, commits to `main` and calls the Netlify deploy hook to trigger a rebuild.
 
 ---
 
@@ -141,8 +141,9 @@ This writes Markdown files into `content/blog/`. Run `hugo server` from the repo
 | Secret name | Where to get it | Notes |
 |---|---|---|
 | `NOTION_TOKEN` | Notion → Settings → Connections → Develop or manage integrations → create an integration → copy the **Internal Integration Secret** | The integration must be added to each database you want to sync (open the database in Notion → ··· → Connect to → your integration) |
+| `NETLIFY_DEPLOY_HOOK` | Netlify → Site → Site configuration → Build & deploy → Build hooks → Add build hook | The workflow calls this URL at the end of every sync that produces changes |
 
-Set this secret at **GitHub → repository → Settings → Secrets and variables → Actions**.
+Set these secrets at **GitHub → repository → Settings → Secrets and variables → Actions**.
 
 ---
 
