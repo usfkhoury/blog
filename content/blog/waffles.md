@@ -2,6 +2,7 @@
 title: "Waffles"
 date: "2023-12-19T20:43:00Z"
 lastmod: "2026-05-17T00:30:00Z"
+tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
 notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
