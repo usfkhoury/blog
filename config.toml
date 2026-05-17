@@ -12,10 +12,6 @@ theme = "hugo-theme-stack"
 
 enableRobotsTXT = true
 
-# Required for the search widget — generates /index.json used by Fuse.js
-[outputs]
-    home = ["HTML", "RSS", "JSON"]
-
 [pagination]
     pagerSize = 5
 
@@ -141,7 +137,6 @@ enableRobotsTXT = true
 [params.widgets]
     homepage = [
         { type = "search" },
-        { type = "archives",   params = { limit = 5  } },
         { type = "categories", params = { limit = 10 } },
         { type = "tag-cloud",  params = { limit = 10 } },
     ]
@@ -297,14 +292,6 @@ enableRobotsTXT = true
     weight     = 1
     [menu.main.params]
         icon = "home"
-
-[[menu.main]]
-    identifier = "archives"
-    name       = "Archives"
-    url        = "/archives/"
-    weight     = 2
-    [menu.main.params]
-        icon = "archives"
 
 [[menu.main]]
     identifier = "search"
