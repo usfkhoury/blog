@@ -21,7 +21,7 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 |                 |  Sugar                                    | 45g         | 3 tbsp            |
 |                 |  Salt                                     | 4g          | 1 tsp             |
 |                 |  Baking Powder                            | 15g         | 1 tbsp            |
-| **Liquid Base** | [Milk](/e434934880474a1c8eec2ced5bbf803f) | 480ml       | 2 cup             |
+| **Liquid Base** | Milk | 480ml       | 2 cup             |
 |                 | Egg                                       | 2 pcs       | 2 pcs             |
 | Fat             | Butter (melted)                           | 107g → 170g | 1/2 cup → 3/4 cup |
 | **Extras**      | Vanilla                                   | 5g          | 1 tsp             |
@@ -56,7 +56,7 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 |                 |  Sugar                                    | 45g           | 45g           | 45g           | 45g           | 45g   | 15g   |
 |                 |  Salt                                     | 4g            | 4g            | 4g            | 4g            | 4g    | 1g    |
 |                 |  Baking Powder                            | 15g           | 15g           | 15g           | 15g           | 15g   | 15g   |
-| **Liquid Base** | [Milk](/e434934880474a1c8eec2ced5bbf803f) | 480ml         | 480ml         | 236ml         | 480ml         | 240ml | 480ml |
+| **Liquid Base** | Milk | 480ml         | 480ml         | 236ml         | 480ml         | 240ml | 480ml |
 |                 | Buttermilk                                |               |               | 236ml         |               | 120ml |       |
 |                 | Egg                                       | 2 pcs         | 2 pcs         | 2 pcs         | 2 pcs         | 2 pcs | 2 pcs |
 |                 | Egg Yolk                                  |               |               |               |               | 1 pcs |       |

@@ -3,15 +3,20 @@ name: Sync Notion to Hugo
 on:
   schedule:
     - cron: "0 * * * *"   # every hour
-  workflow_dispatch:        # manual trigger
+  workflow_dispatch:        # manual trigger via GitHub UI
+
+# Prevent two sync runs from overlapping. If a run is already in progress,
+# the new one waits rather than cancels, so no sync window is lost.
+concurrency:
+  group: notion-sync
+  cancel-in-progress: false
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: write
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repo

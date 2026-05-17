@@ -2,6 +2,9 @@
   "name": "notion-to-hugo",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "sync": "node notion-to-hugo.js"
   },

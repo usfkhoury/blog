@@ -2,7 +2,7 @@
 # Hugo base
 # ──────────────────────────────────────────────────────────────────────────────
 baseurl                = "https://usfkhoury.com/"
-locale                 = "en-us"
+languageCode           = "en-us"
 defaultContentLanguage = "en"
 # Set to true if your default language uses CJK characters
 hasCJKLanguage         = false
