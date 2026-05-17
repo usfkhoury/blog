@@ -78,12 +78,7 @@ function stripNotionLinks(markdown) {
 
 function buildFrontmatter(props) {
   const lines = ['---'];
-  // Prefix title with the first category unless it already starts with it
-  const category = props.categories[0] ?? '';
-  const displayTitle = (category && !props.title.startsWith(category))
-    ? `${category}: ${props.title}`
-    : props.title;
-  lines.push(`title: ${JSON.stringify(displayTitle)}`);
+  lines.push(`title: ${JSON.stringify(props.title)}`);
   lines.push(`date: "${props.date}"`);
   lines.push(`lastmod: "${props.lastmod}"`);
   if (props.description) lines.push(`description: ${JSON.stringify(props.description)}`);
