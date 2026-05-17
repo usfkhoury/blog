@@ -1,7 +1,7 @@
 ---
 title: "Maamoul"
 date: "2024-03-24T10:24:00Z"
-lastmod: "2026-05-17T02:51:00Z"
+lastmod: "2026-05-17T16:43:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -34,14 +34,14 @@ notion_id: "b1717dfb-b141-45fe-b88f-fdc4977056ce"
 ## Filling (Tamer)
 
 
-| Ingredient  | Weight      | Volume                           |
-| ----------- | ----------- | -------------------------------- |
-| Tamer       | 2kg (Mfa2a) |                                  |
-| Zebde       | 35g         | 1 mal3a2a zghire                 |
-| Ma7lab      | 2g          | 0.25 male32a zghire              |
-| Jozt el tib |             | 2 barchit nakze bi ras l male32a |
-| Mazaher     | 20g         | 0.25 fenjen ahwe                 |
-| Mawared     | 20g         | 0.25 fenjen ahwe                 |
+| Ingredient  | Weight                           | Volume                           |
+| ----------- | -------------------------------- | -------------------------------- |
+| Tamer       | 2kg (Mfa2a)                      |                                  |
+| Zebde       | 35g                              | 1 mal3a2a zghire                 |
+| Ma7lab      | 2g                               | 0.25 male32a zghire              |
+| Jozt el tib | 2 barchit nakze bi ras l male32a | 2 barchit nakze bi ras l male32a |
+| Mazaher     | 20g                              | 0.25 fenjen ahwe                 |
+| Mawared     | 20g                              | 0.25 fenjen ahwe                 |
 
 
 ## Filling (Festou2)

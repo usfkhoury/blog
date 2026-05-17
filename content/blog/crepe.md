@@ -1,7 +1,7 @@
 ---
 title: "Crepe"
 date: "2023-12-19T23:10:00Z"
-lastmod: "2026-05-17T02:33:00Z"
+lastmod: "2026-05-17T16:26:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -15,14 +15,14 @@ notion_id: "fab62420-8dd9-4e22-b78c-00d85624158c"
 # Ideal Recipe
 
 
-| Category        | Ingredient | Weight             | Volume   |
-| --------------- | ---------- | ------------------ | -------- |
-| **Dry Base**    | Flour      | 150g               | 1 cup    |
-|                 | Sugar      | 25g                | 1.5 tbsp |
-| **Liquid Base** | Milk       | 236ml              | 1 cup    |
-|                 | Water      | Lal terkheye chway |          |
-|                 | Egg        | 2 pcs              | 2 pcs    |
-| Fat             | Oil        | 14ml               | 1 tbsp   |
+| Category        | Ingredient | Weight             | Volume             |
+| --------------- | ---------- | ------------------ | ------------------ |
+| **Dry Base**    | Flour      | 150g               | 1 cup              |
+|                 | Sugar      | 25g                | 1.5 tbsp           |
+| **Liquid Base** | Milk       | 236ml              | 1 cup              |
+|                 | Water      | Lal terkheye chway | Lal terkheye chway |
+|                 | Egg        | 2 pcs              | 2 pcs              |
+| Fat             | Oil        | 14ml               | 1 tbsp             |
 
 
 # Possible Alternative Recipes
