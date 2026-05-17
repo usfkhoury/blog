@@ -35,10 +35,14 @@ function buildFrontmatter(props) {
   if (props.tags.length)       lines.push(`tags: [${props.tags.map(t => JSON.stringify(t)).join(', ')}]`);
   if (props.categories.length) lines.push(`categories: [${props.categories.map(c => JSON.stringify(c)).join(', ')}]`);
   lines.push(`draft: false`);
-  lines.push(`type: "post"`);
   lines.push(`${NOTION_ID_KEY}: "${props.pageId}"`);
   lines.push('---');
   return lines.join('\n') + '\n\n';
+}
+
+async function getDatabaseTitle() {
+  const db = await notion.databases.retrieve({ database_id: process.env.NOTION_DATABASE_ID });
+  return Array.isArray(db.title) ? db.title.map(t => t.plain_text).join('') : '';
 }
 
 async function getPublishedPages() {
@@ -84,9 +88,11 @@ function extractProps(page) {
   const descProp = p['Description'] ?? p['Summary'];
   const description = descProp?.rich_text ? richText(descProp.rich_text) : '';
 
+  // Tags — Notion property named "Tags" (multi-select)
   const tagsProp = p['Tags'];
   const tags = tagsProp?.multi_select ? tagsProp.multi_select.map(t => t.name) : [];
 
+  // Category — Notion property named "Category" (select) or "Categories" (multi-select)
   const catProp = p['Categories'] ?? p['Category'];
   const categories = catProp?.multi_select
     ? catProp.multi_select.map(c => c.name)
@@ -114,13 +120,15 @@ async function main() {
 
   fs.mkdirSync(CONTENT_DIR, { recursive: true });
 
-  const pages = await getPublishedPages();
-  console.log(`Found ${pages.length} published page(s) in Notion.`);
+  const [pages, dbTitle] = await Promise.all([getPublishedPages(), getDatabaseTitle()]);
+  console.log(`Found ${pages.length} published page(s) in Notion database "${dbTitle}".`);
 
   const syncedPageIds = new Set();
 
   for (const page of pages) {
     const props = extractProps(page);
+    // Inject the database name as a tag so posts are tagged by their source database
+    if (dbTitle && !props.tags.includes(dbTitle)) props.tags.push(dbTitle);
     console.log(`Syncing: "${props.title}" → ${props.slug}.md`);
 
     const mdBlocks = await n2m.pageToMarkdown(page.id);
