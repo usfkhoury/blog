@@ -107,7 +107,7 @@ enableRobotsTXT = true
 
     [params.article.list]
         # Show tags below each article card in list views
-        showTags = false
+        showTags = true
 
     [params.article.license]
         enabled = false
