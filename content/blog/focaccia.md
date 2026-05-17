@@ -1,7 +1,7 @@
 ---
 title: "Focaccia"
 date: "2024-03-22T10:19:00Z"
-lastmod: "2026-05-17T17:22:00Z"
+lastmod: "2026-05-17T17:26:00Z"
 tags: ["Bread"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -15,25 +15,25 @@ notion_id: "4b8627ce-2432-48ca-b136-635283f7756d"
 # Ideal Recipe
 
 
-| Category        | **Ingredient** | Weight                        | Percentage |
-| --------------- | -------------- | ----------------------------- | ---------- |
-| Dry Base        |  Flour         | 500g                          |            |
-|                 |  Salt          | 10g                           | 2%         |
-|                 | Yeast          | 10g                           | 2%         |
-| **Liquid Base** | Water          | 375g                          | 75%        |
-| Fat             | Olive Oil      | 10g (in dough) + 20g (in pan) | 2%         |
+| **Category**    | **Ingredient** | **Weight**                    | **Percentage** |
+| --------------- | -------------- | ----------------------------- | -------------- |
+| **Dry Base**    |  Flour         | 500g                          |                |
+|                 |  Salt          | 10g                           | 2%             |
+|                 | Yeast          | 10g                           | 2%             |
+| **Liquid Base** | Water          | 375g                          | 75%            |
+| **Fat**         | Olive Oil      | 10g (in dough) + 20g (in pan) | 2%             |
 
 
 # Experiments
 
 
-| Category        | **Ingredient** | Exp A | Helen |
-| --------------- | -------------- | ----- | ----- |
-| Dry Base        |  Flour         | 100%  | 100%  |
-|                 |  Salt          | 2%    | 2.4%  |
-|                 | Yeast          | 2%    | 0.7%  |
-| **Liquid Base** | Water          | 75%   | 70%   |
-| Fat             | Olive Oil      | 2%    | 2%    |
+| **Category**    | **Ingredient** | **Exp A** | **Helen** |
+| --------------- | -------------- | --------- | --------- |
+| **Dry Base**    |  Flour         | 100%      | 100%      |
+|                 |  Salt          | 2%        | 2.4%      |
+|                 | Yeast          | 2%        | 0.7%      |
+| **Liquid Base** | Water          | 75%       | 70%       |
+| **Fat**         | Olive Oil      | 2%        | 2%        |
 
 
 ### Feedback

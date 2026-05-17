@@ -1,7 +1,7 @@
 ---
 title: "Waffles"
 date: "2023-12-19T20:43:00Z"
-lastmod: "2026-05-17T16:28:00Z"
+lastmod: "2026-05-17T17:27:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -17,13 +17,13 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 
 | Category        | Ingredient                                                     | Weight      | Volume            |
 | --------------- | -------------------------------------------------------------- | ----------- | ----------------- |
-| Dry Base        | Flour                                                          | 300g        | 2 cup             |
+| **Dry Base**    | Flour                                                          | 300g        | 2 cup             |
 |                 | Sugar                                                          | 45g         | 3 tbsp            |
 |                 | Salt                                                           | 4g          | 1 tsp             |
 |                 | Baking Powder                                                  | 15g         | 1 tbsp            |
 | **Liquid Base** | Milk | 480ml       | 2 cup             |
 |                 | Egg                                                            | 2 pcs       | 2 pcs             |
-| Fat             | Butter (melted)                                                | 107g - 170g | 1/2 cup - 3/4 cup |
+| **Fat**         | Butter (melted)                                                | 107g - 170g | 1/2 cup - 3/4 cup |
 | **Extras**      | Vanilla                                                        | 5g          | 1 tsp             |
 
 
