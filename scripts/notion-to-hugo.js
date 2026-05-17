@@ -60,20 +60,39 @@ function isoDate(str) {
   return d.toISOString().replace(/\.\d{3}Z$/, 'Z');
 }
 
+// Normalises any Notion page ID variant (with or without hyphens) to UUID form.
+// Needed because the Notion API returns hyphened UUIDs while notion-to-md renders
+// internal link hrefs as plain 32-char hex strings.
+function normalizePageId(id) {
+  const hex = id.replace(/-/g, '').toLowerCase();
+  if (hex.length !== 32) return id;
+  return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+}
+
 /**
- * Strips broken Notion-internal hyperlinks from markdown.
+ * Resolves Notion-internal hyperlinks to blog post URLs where possible.
  * notion-to-md renders internal page links as [text](/32-char-hex) or
- * [text](https://www.notion.so/…). Neither resolves on the blog.
- * We keep the link text and discard the href.
+ * [text](https://www.notion.so/…). When the linked page is published and
+ * synced, we rewrite the href to /blog/{slug}/. Otherwise we strip the href
+ * and keep the link text (safe fallback — same as the old stripNotionLinks).
  */
-function stripNotionLinks(markdown) {
-  // /some-hex-id (32-char hex, optionally hyphenated UUID form)
-  const internalPath = /\[([^\]]+)\]\(\/[a-f0-9-]{32,36}\)/g;
-  // Full notion.so URLs
-  const notionUrl = /\[([^\]]+)\]\(https?:\/\/(?:www\.)?notion\.so\/[^\s)]+\)/g;
+function resolveNotionLinks(markdown, pageIdToSlug) {
+  // Form 1: [text](/32hexchars) or [text](/uuid-with-hyphens)
+  const internalPath = /\[([^\]]+)\]\(\/([\da-f-]{32,36})\)/gi;
+  // Form 2: [text](https://www.notion.so/...32hexchars...)
+  const notionUrl = /\[([^\]]+)\]\(https?:\/\/(?:www\.)?notion\.so\/([^\s)]+)\)/gi;
+
   return markdown
-    .replace(internalPath, '$1')
-    .replace(notionUrl,    '$1');
+    .replace(internalPath, (_, text, rawId) => {
+      const slug = pageIdToSlug.get(normalizePageId(rawId));
+      return slug ? `[${text}](/blog/${slug}/)` : text;
+    })
+    .replace(notionUrl, (_, text, urlPath) => {
+      const m = urlPath.match(/([0-9a-f]{32})(?:\?.*)?$/i);
+      if (!m) return text;
+      const slug = pageIdToSlug.get(normalizePageId(m[1]));
+      return slug ? `[${text}](/blog/${slug}/)` : text;
+    });
 }
 
 function buildFrontmatter(props) {
@@ -178,50 +197,60 @@ function readNotionId(filePath) {
   }
 }
 
-// ─── Per-database sync ────────────────────────────────────────────────────────
+// ─── Per-database metadata fetch (Pass 1) ────────────────────────────────────
 
-async function syncDatabase(databaseId, syncedPageIds) {
+// Fetches all published page metadata from one database.
+// Populates syncedPageIds and returns [{page, props}, ...].
+// Content is NOT fetched here — that happens in syncPageContent after the full
+// cross-database link map has been built.
+async function fetchDatabasePages(databaseId, syncedPageIds) {
   const [pages, dbTitle] = await Promise.all([
     getPublishedPages(databaseId),
     getDatabaseTitle(databaseId),
   ]);
   console.log(`Found ${pages.length} published page(s) in Notion database "${dbTitle}".`);
 
+  const items = [];
   for (const page of pages) {
-    let props;
     try {
-      props = extractProps(page);
+      const props = extractProps(page);
+      // Inject the database name as a tag so posts are tagged by their source database
+      if (dbTitle && !props.tags.includes(dbTitle)) props.tags.push(dbTitle);
+      syncedPageIds.add(page.id);
+      items.push({ page, props });
     } catch (err) {
       console.error(`  Skipping page ${page.id}: failed to extract properties — ${err.message}`);
-      continue;
     }
-
-    // Inject the database name as a tag so posts are tagged by their source database
-    if (dbTitle && !props.tags.includes(dbTitle)) props.tags.push(dbTitle);
-
-    console.log(`  Syncing: "${props.title}" → ${props.slug}.md`);
-
-    let body;
-    try {
-      const mdBlocks = await withRetry(() => n2m.pageToMarkdown(page.id));
-      const mdResult = n2m.toMarkdownString(mdBlocks);
-      // notion-to-md v3 returns { parent: string }, v2 returns a string directly
-      body = typeof mdResult === 'object' && mdResult !== null
-        ? mdResult.parent
-        : (mdResult ?? '');
-      body = stripNotionLinks(body);
-    } catch (err) {
-      console.error(`  Skipping page ${page.id}: failed to convert to Markdown — ${err.message}`);
-      continue;
-    }
-
-    const filePath = path.join(CONTENT_DIR, `${props.slug}.md`);
-    fs.writeFileSync(filePath, buildFrontmatter(props) + body, 'utf8');
-    syncedPageIds.add(page.id);
-
-    // Small polite delay between page fetches to avoid hammering the API
-    await sleep(200);
   }
+  return items;
+}
+
+// ─── Per-page content sync (Pass 2) ──────────────────────────────────────────
+
+// Fetches and converts the Markdown content for one page, resolves internal
+// Notion links using the pre-built map, then writes the final file.
+async function syncPageContent(page, props, pageIdToSlug) {
+  console.log(`  Syncing: "${props.title}" → ${props.slug}.md`);
+
+  let body;
+  try {
+    const mdBlocks = await withRetry(() => n2m.pageToMarkdown(page.id));
+    const mdResult = n2m.toMarkdownString(mdBlocks);
+    // notion-to-md v3 returns { parent: string }, v2 returns a string directly
+    body = typeof mdResult === 'object' && mdResult !== null
+      ? mdResult.parent
+      : (mdResult ?? '');
+    body = resolveNotionLinks(body, pageIdToSlug);
+  } catch (err) {
+    console.error(`  Skipping page ${page.id}: failed to convert to Markdown — ${err.message}`);
+    return;
+  }
+
+  const filePath = path.join(CONTENT_DIR, `${props.slug}.md`);
+  fs.writeFileSync(filePath, buildFrontmatter(props) + body, 'utf8');
+
+  // Small polite delay between page fetches to avoid hammering the API
+  await sleep(200);
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -239,9 +268,23 @@ async function main() {
   fs.mkdirSync(CONTENT_DIR, { recursive: true });
 
   const syncedPageIds = new Set();
+  const allItems = [];
 
+  // Pass 1: fetch metadata from all databases and build the link-resolution map.
+  // We collect everything before fetching any content so that links between
+  // databases (e.g. a Kaak page linking to Maamoul) resolve correctly.
   for (const databaseId of databaseIds) {
-    await syncDatabase(databaseId, syncedPageIds);
+    const items = await fetchDatabasePages(databaseId, syncedPageIds);
+    allItems.push(...items);
+  }
+
+  const pageIdToSlug = new Map(
+    allItems.map(({ page, props }) => [normalizePageId(page.id), props.slug])
+  );
+
+  // Pass 2: fetch and write content for every page, resolving internal links.
+  for (const { page, props } of allItems) {
+    await syncPageContent(page, props, pageIdToSlug);
   }
 
   // Delete files that were previously synced from Notion but are no longer published.
