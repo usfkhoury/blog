@@ -3,7 +3,6 @@ title: "Waffles"
 date: "2023-12-19T20:43:00Z"
 lastmod: "2026-05-16T22:57:00Z"
 draft: false
-type: "post"
 notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 ---
 

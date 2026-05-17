@@ -3,7 +3,6 @@ title: "Yawmiyet Khebbez (Part 1): Khebez Arabe (Pita Bread) - الخبز الع
 date: 2020-12-27T21:51:03Z
 draft: false
 categories: ["Yawmiyet Khebbez"]
-type: "post"
 math: true
 
 ---
@@ -29,7 +28,7 @@ math: true
 |  | Baking Time | Until puff and a bit brown |
 
 ## The Timeline
-{{< mermaid >}}
+```mermaid
 gantt
 	dateFormat  DD-HH:mm
 	axisFormat  Day%e-%I:%M
@@ -46,7 +45,7 @@ gantt
 		Final Shape				 :shape2, after shape1, 1h
 	section Baking
 		Baking				 	 :bake1, after shape1, 1h
-{{< /mermaid >}}
+```
 
 ## Notes
 
