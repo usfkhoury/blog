@@ -1,7 +1,7 @@
 ---
 title: "Waffles"
 date: "2023-12-19T20:43:00Z"
-lastmod: "2026-05-17T02:29:00Z"
+lastmod: "2026-05-17T16:28:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -70,10 +70,10 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 
 | Experiment    | Feedback                                                                                                               |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Fadia         | Basic, no major flavor, rely on topping                                                                                |
-| JW            | Too many ingredients                                                                                                   |
-| Fadia (rev 1) | Using the ingredients of the Fadia recipe but with JW measurements. Bit better than basic, since a little sweeter      |
-| Fadia (rev 2) | Same as Fadia (rev 1) but with a mix of milk and buttermilk. No real difference. Buttermilk didn't add a lot of flavor |
-| Fadia (rev 3) | Replace the oil with butter. Major flavor change with rich taste due to butter                                         |
 | Fadia (rev 4) | Basic, even if it has butter percentage. Butter percentage can be experimented                                         |
+| Fadia (rev 3) | Replace the oil with butter. Major flavor change with rich taste due to butter                                         |
+| Fadia (rev 2) | Same as Fadia (rev 1) but with a mix of milk and buttermilk. No real difference. Buttermilk didn't add a lot of flavor |
+| Fadia (rev 1) | Using the ingredients of the Fadia recipe but with JW measurements. Bit better than basic, since a little sweeter      |
+| JW            | Too many ingredients                                                                                                   |
+| Fadia         | Basic, no major flavor, rely on topping                                                                                |
 
