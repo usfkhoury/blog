@@ -32,7 +32,7 @@ enableRobotsTXT = true
                 enable = true
                 [markup.goldmark.extensions.passthrough.delimiters]
                     block  = [["\\[", "\\]"], ["$$", "$$"]]
-                    inline = [["\\(", "\\)"]]
+                    inline = [["\\(", "\\)"], ["$", "$"]]
 
         [markup.goldmark.renderer]
             # Allow raw HTML inside Markdown (needed for shortcodes that emit HTML)
@@ -101,7 +101,7 @@ enableRobotsTXT = true
 
 [params.article]
     headingAnchor = false
-    math          = false
+    math          = true
     toc           = true
     readingTime   = true
 
