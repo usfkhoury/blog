@@ -1,5 +1,5 @@
 ---
-title: "Waffles"
+title: "Yawmiyet Khebbez: Waffles"
 date: "2023-12-19T20:43:00Z"
 lastmod: "2026-05-17T02:29:00Z"
 tags: ["Sweets"]

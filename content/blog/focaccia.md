@@ -1,5 +1,5 @@
 ---
-title: "Focaccia"
+title: "Yawmiyet Khebbez: Focaccia"
 date: "2024-03-22T10:19:00Z"
 lastmod: "2026-05-17T02:45:00Z"
 tags: ["Bread"]

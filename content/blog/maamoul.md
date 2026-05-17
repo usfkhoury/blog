@@ -1,5 +1,5 @@
 ---
-title: "Maamoul"
+title: "Yawmiyet Khebbez: Maamoul"
 date: "2024-03-24T10:24:00Z"
 lastmod: "2026-05-17T02:51:00Z"
 tags: ["Sweets"]
