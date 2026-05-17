@@ -12,6 +12,10 @@ theme = "hugo-theme-stack"
 
 enableRobotsTXT = true
 
+# Required for the search widget — generates /index.json used by Fuse.js
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
 [pagination]
     pagerSize = 5
 
@@ -295,20 +299,20 @@ enableRobotsTXT = true
         icon = "home"
 
 [[menu.main]]
-    identifier = "blog"
-    name       = "Blog"
-    url        = "/blog/"
+    identifier = "archives"
+    name       = "Archives"
+    url        = "/archives/"
     weight     = 2
     [menu.main.params]
         icon = "archives"
 
 [[menu.main]]
-    identifier = "categories"
-    name       = "Categories"
-    url        = "/categories/"
+    identifier = "search"
+    name       = "Search"
+    url        = "/search/"
     weight     = 3
     [menu.main.params]
-        icon = "hash"
+        icon = "search"
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Social links (sidebar)
