@@ -1,7 +1,7 @@
 ---
 title: "Ouwaymat"
 date: "2024-01-02T21:15:00Z"
-lastmod: "2026-05-17T16:36:00Z"
+lastmod: "2026-05-17T17:31:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -28,7 +28,7 @@ notion_id: "20465621-402e-4633-bca3-c44cc077ef1b"
 |                 | 7amoud l laymoun | 7 7abbat |        |
 
 
-## 3ajen Prep
+# 3ajen Prep
 
 1. Raye7oun chi se3ten la yenefkho
 2. 2liyoun
