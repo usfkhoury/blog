@@ -53,3 +53,6 @@ jobs:
             git commit -m "chore: sync posts from Notion [skip ci]"
             git push
           fi
+
+      - name: Trigger Netlify deploy
+        run: curl -X POST -d '{}' ${{ secrets.NETLIFY_DEPLOY_HOOK }}
