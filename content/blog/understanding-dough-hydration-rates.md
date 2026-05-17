@@ -2,7 +2,7 @@
 title: "Understanding Dough Hydration Rates"
 date: "2026-05-17T12:54:00Z"
 lastmod: "2026-05-17T14:23:00Z"
-tags: ["References "]
+tags: ["References"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
 notion_id: "363c46dc-1998-81ca-bb83-cc08a66ed167"
