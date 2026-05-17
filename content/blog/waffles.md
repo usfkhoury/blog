@@ -1,7 +1,7 @@
 ---
 title: "Waffles"
 date: "2023-12-19T20:43:00Z"
-lastmod: "2026-05-17T01:51:00Z"
+lastmod: "2026-05-17T01:53:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -52,7 +52,7 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 
 | Category        | Ingredient                                                     | Fadia (rev 4) | Fadia (rev 3) | Fadia (rev 2) | Fadia (rev 1) | JW    | Fadia |
 | --------------- | -------------------------------------------------------------- | ------------- | ------------- | ------------- | ------------- | ----- | ----- |
-| Dry Base        | Flour                                                          | 300g          | 300g          | 300g          | 300g          | 300g  | 300g  |
+| **Dry Base**    | Flour                                                          | 300g          | 300g          | 300g          | 300g          | 300g  | 300g  |
 |                 | Sugar                                                          | 45g           | 45g           | 45g           | 45g           | 45g   | 15g   |
 |                 | Salt                                                           | 4g            | 4g            | 4g            | 4g            | 4g    | 1g    |
 |                 | Baking Powder                                                  | 15g           | 15g           | 15g           | 15g           | 15g   | 15g   |
@@ -60,7 +60,7 @@ notion_id: "7019e761-f773-494c-a7a7-5081157bb0ff"
 |                 | Buttermilk                                                     |               |               | 236ml         |               | 120ml |       |
 |                 | Egg                                                            | 2 pcs         | 2 pcs         | 2 pcs         | 2 pcs         | 2 pcs | 2 pcs |
 |                 | Egg Yolk                                                       |               |               |               |               | 1 pcs |       |
-| Fat             | Butter (melted)                                                | 54g           | 107g → 170g   |               |               | 170g  |       |
+| **Fat**         | Butter (melted)                                                | 54g           | 107g → 170g   |               |               | 170g  |       |
 |                 | Oil                                                            | 87g           |               | 118ml         | 118ml         |       | 118ml |
 | **Extras**      | Vanilla                                                        | 5g            | 5g            | 5g            | 5g            | 5g    | 5g    |
 
