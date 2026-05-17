@@ -1,0 +1,6 @@
+# Normalize line endings: store as LF in the repo, check out as LF everywhere.
+# Shell scripts and the .notion-databases data file must be LF on all platforms
+# so that bash parsing (tr, sed) works correctly in GitHub Actions (Linux).
+* text=auto
+*.sh text eol=lf
+.notion-databases text eol=lf

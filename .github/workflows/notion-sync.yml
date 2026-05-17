@@ -29,7 +29,7 @@ jobs:
 
       - name: Load database IDs
         run: |
-          IDS="$(grep -v '^\s*#' .notion-databases | grep -v '^\s*$' | tr '\n' ',' | sed 's/,$//')"
+          IDS="$(grep -v '^\s*#' .notion-databases | grep -v '^\s*$' | tr -d '\r' | tr '\n' ',' | sed 's/,$//')"
           echo "NOTION_DATABASE_ID=$IDS" >> "$GITHUB_ENV"
 
       - name: Install dependencies

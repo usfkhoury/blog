@@ -46,15 +46,15 @@ blog/
 │   └── page/
 │       └── search/         Search page (must not be deleted)
 ├── scripts/
-│   ├── notion-to-hugo.js        Sync script
-│   ├── update_notion_secret.sh  Pushes .notion-databases to the GitHub secret
-│   ├── package.json             Node dependencies
-│   └── .gitignore               Excludes node_modules/
+│   ├── notion-to-hugo.js   Sync script
+│   ├── package.json        Node dependencies
+│   └── .gitignore          Excludes node_modules/
 ├── static/
 │   └── images/main/
 │       └── logo.jpg        Avatar image shown in the sidebar
 ├── themes/
 │   └── hugo-theme-stack/   Theme (git submodule — do not edit directly)
+├── .gitattributes          Forces LF line endings for shell scripts and .notion-databases
 ├── .notion-databases       Source-of-truth list of Notion database IDs (one per line)
 ├── config.toml             All Hugo and theme settings
 └── netlify.toml            Netlify build configuration
@@ -106,9 +106,7 @@ blog/
 
 The file `.notion-databases` (repo root) lists every Notion database that the sync pipeline reads from, one ID per line. Lines starting with `#` are treated as comments.
 
-To add, remove, or reorder IDs: edit the file and push. The GitHub Actions workflow parses it at the start of every sync run — no secret update, no script needed.
-
-The `NOTION_DATABASE_ID` GitHub secret is no longer used by the workflow and can be deleted.
+To add, remove, or reorder IDs: edit the file and push. The GitHub Actions workflow parses it at the start of every sync run.
 
 ---
 
@@ -129,7 +127,7 @@ cd scripts
 npm install
 
 export NOTION_TOKEN="secret_…"
-export NOTION_DATABASE_ID="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export NOTION_DATABASE_ID="$(grep -v '^\s*#' ../.notion-databases | grep -v '^\s*$' | tr -d '\r' | tr '\n' ',' | sed 's/,$//')"
 
 node notion-to-hugo.js
 ```
@@ -143,9 +141,8 @@ This writes Markdown files into `content/blog/`. Run `hugo server` from the repo
 | Secret name | Where to get it | Notes |
 |---|---|---|
 | `NOTION_TOKEN` | Notion → Settings → Connections → Develop or manage integrations → create an integration → copy the **Internal Integration Secret** | The integration must be added to each database you want to sync (open the database in Notion → ··· → Connect to → your integration) |
-| ~~`NOTION_DATABASE_ID`~~ | _(no longer needed)_ | IDs are now read from `.notion-databases` in the repo; this secret can be deleted |
 
-Both secrets must be set at **GitHub → repository → Settings → Secrets and variables → Actions**.
+Set this secret at **GitHub → repository → Settings → Secrets and variables → Actions**.
 
 ---
 
