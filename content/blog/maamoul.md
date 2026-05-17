@@ -1,7 +1,7 @@
 ---
 title: "Maamoul"
 date: "2024-03-24T10:24:00Z"
-lastmod: "2026-05-17T16:43:00Z"
+lastmod: "2026-05-17T17:41:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -62,6 +62,9 @@ notion_id: "b1717dfb-b141-45fe-b88f-fdc4977056ce"
 | ------------------------- | ------ | ------ |
 | Joz (mathoun 3al khechne) | 0.5kg  |        |
 | Loz (mathoun 3al khechne) | 150g   |        |
+
+
+# Prep
 
 
 ## Liquid Prep

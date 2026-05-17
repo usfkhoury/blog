@@ -1,7 +1,7 @@
 ---
 title: "Kaak"
 date: "2024-03-23T22:40:00Z"
-lastmod: "2026-05-17T15:53:00Z"
+lastmod: "2026-05-17T17:41:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -28,6 +28,9 @@ notion_id: "886d5d0d-b345-4197-bebf-2682438aadca"
 | **Extras**      | Joz el tib           | 2 pcs (10g) |        |
 |                 | Barech 7amoud        | 2 pcs       |        |
 |                 | Ma7lab               | 50g         |        |
+
+
+# Prep
 
 
 ## Liquid Prep
