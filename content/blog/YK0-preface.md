@@ -56,7 +56,7 @@ For instance, this would be an example of a table for a recipe where I experimen
 Following the above mentioned table, the post will proceed by listing a high level breakdown of the recipe, formated as a gantt chart, showing the typical progression of the recipe progression.
 This chart would look something like this:
 
-{{< mermaid >}}
+```mermaid
 gantt
 	dateFormat  DD-HH:mm
 	axisFormat  Day%e-%I:%M
@@ -74,6 +74,6 @@ gantt
 		Final Shape				 :shape2, after shape1, 10m
 	section Baking
 		Baking				 	 :bake1, after rest2, 1h
-{{< /mermaid >}}
+```
 
 And finally, the post will include any notes that I have on each experiment and on the recipe in general.
