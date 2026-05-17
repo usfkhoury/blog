@@ -1,112 +1,354 @@
-baseurl = "https://usfkhoury.com/"
-locale = "en-us"
+# ──────────────────────────────────────────────────────────────────────────────
+# Hugo base
+# ──────────────────────────────────────────────────────────────────────────────
+baseurl                = "https://usfkhoury.com/"
+locale                 = "en-us"
+defaultContentLanguage = "en"
+# Set to true if your default language uses CJK characters
+hasCJKLanguage         = false
+
 title = "Youssef El Khoury"
 theme = "hugo-theme-stack"
-paginate = 5
 
 enableRobotsTXT = true
 
+[pagination]
+    pagerSize = 5
+
+# Permalink format for blog posts and standalone pages
+# Changing these will break existing URLs — leave as-is unless you redirect old URLs
+[permalinks]
+    blog = "/blog/:slug/"
+    page = "/:slug/"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Markup (goldmark renderer + syntax highlighting + ToC)
+# ──────────────────────────────────────────────────────────────────────────────
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+            # Math passthrough — lets LaTeX blocks pass through to MathJax/KaTeX
+            [markup.goldmark.extensions.passthrough]
+                enable = true
+                [markup.goldmark.extensions.passthrough.delimiters]
+                    block  = [["\\[", "\\]"], ["$$", "$$"]]
+                    inline = [["\\(", "\\)"]]
+
+        [markup.goldmark.renderer]
+            # Allow raw HTML inside Markdown (needed for shortcodes that emit HTML)
+            unsafe = true
+
+    [markup.tableOfContents]
+        startLevel = 2
+        endLevel   = 4
+        ordered    = true
+
+    [markup.highlight]
+        noClasses          = false
+        codeFences         = true
+        guessSyntax        = true
+        lineNos            = true
+        lineNumbersInTable = true
+        lineNoStart        = 1
+        tabWidth           = 4
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Related posts
+# ──────────────────────────────────────────────────────────────────────────────
+[related]
+    includeNewer = true
+    threshold    = 60
+    toLower      = false
+    indices      = [
+        { name = "tags",       weight = 100 },
+        { name = "categories", weight = 200 },
+    ]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Disqus (leave shortname empty to disable)
+# ──────────────────────────────────────────────────────────────────────────────
+[services.disqus]
+    shortname = ""
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Theme params
+# ──────────────────────────────────────────────────────────────────────────────
 [params]
-  mainSections = ["blog"]
-  featuredImageField = "image"
-  rssFullContent = true
+    # Sections rendered on the homepage and in the RSS feed
+    mainSections   = ["blog"]
+    rssFullContent = true
+    # "default" = Hugo's default sort order | "lastmod" = sort by last modified date
+    SortBy         = "default"
+    # Path to favicon — relative to assets/ folder
+    favicon        = ""
 
 [params.footer]
-  since = 2020
+    since      = 2020
+    customText = ""
 
 [params.dateFormat]
-  published = "Jan 02, 2006"
-  lastUpdated = "Jan 02, 2006 15:04 MST"
+    # Hugo date format tokens — see https://gohugo.io/functions/time/format/
+    published   = "Jan 02, 2006"
+    lastUpdated = "Jan 02, 2006 15:04 MST"
 
 [params.sidebar]
-  subtitle = "My personal blog, exploring and documenting the Lebanese tradition of doing things yourself"
-  compact = false
-  avatar = "https://usfkhoury.com/images/main/logo.jpg"
+    subtitle = "My personal blog, exploring and documenting the Lebanese tradition of doing things yourself"
+    compact  = false
+    # Emoji displayed next to the avatar
+    emoji    = ""
+    # Avatar: full URL (remote) or assets/-relative path (local, e.g. "img/avatar.png")
+    avatar   = "https://usfkhoury.com/images/main/logo.jpg"
 
 [params.article]
-  math = false
-  toc = true
-  readingTime = true
+    headingAnchor = false
+    math          = false
+    toc           = true
+    readingTime   = true
 
-[params.article.license]
-  enabled = false
+    [params.article.list]
+        # Show tags below each article card in list views
+        showTags = false
 
-[params.comments]
-  enabled = false
+    [params.article.license]
+        enabled = false
+        default = "Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
 
+    # Native mermaid diagram support — diagrams render from ```mermaid code blocks.
+    # Auto-switches theme with site light/dark mode.
+    [params.article.mermaid]
+        look                  = "classic"       # classic | handDrawn
+        lightTheme            = "default"       # default | neutral | dark | forest | base | null
+        darkTheme             = "dark"          # default | neutral | dark | forest | base | null
+        securityLevel         = "loose"         # strict | loose | antiscript | sandbox
+        htmlLabels            = true
+        transparentBackground = false
+        # lightThemeVariables = { primaryColor = "#ff0000" }
+        # darkThemeVariables  = { primaryColor = "#00ff00" }
+
+    # Emoji icons shown in GitHub-style alert blocks (> [!NOTE] etc.)
+    [params.article.alertIcon]
+        note      = "📝"
+        tip       = "💡"
+        important = "📌"
+        warning   = "⚠️"
+        caution   = "🚨"
+
+# Sidebar widgets — homepage and per-page
 [params.widgets]
-  enabled = ["search", "archives", "tag-cloud"]
+    homepage = [
+        { type = "search" },
+        { type = "archives",   params = { limit = 5  } },
+        { type = "categories", params = { limit = 10 } },
+        { type = "tag-cloud",  params = { limit = 10 } },
+    ]
+    page = [
+        { type = "toc" },
+    ]
 
-[params.widgets.archives]
-  limit = 5
+# Open Graph / Twitter card
+[params.opengraph.twitter]
+    site = ""                   # your Twitter/X handle, e.g. "@usfkhoury"
+    card = "summary_large_image"
 
-[params.widgets.tagCloud]
-  limit = 10
+# Light / dark colour scheme toggle
+[params.colorScheme]
+    toggle  = true
+    default = "auto"   # auto | light | dark
 
-# ── Navigation ─────────────────────────────────────────────────────────────────
+# Image processing
+[params.imageProcessing]
+    autoOrient = false
+
+    [params.imageProcessing.external]
+        timeout = "5s"
+
+    [params.imageProcessing.content]
+        enabled = true
+        widths  = [800, 1600, 2400]
+
+    [params.imageProcessing.thumbnail]
+        enabled = true
+
+# GDPR cookie consent banner
+[params.cookies]
+    enabled      = false
+    showSettings = true
+
+    [params.cookies.categories]
+        analytics  = true
+        functional = true
+
+# ── Comments ──────────────────────────────────────────────────────────────────
+# Set enabled = true and pick one provider below, then fill in its section.
+[params.comments]
+    enabled  = false
+    provider = "disqus"   # disqus | disqusjs | utterances | beaudar | remark42 |
+                          # vssue | waline | twikoo | cactus | giscus | gitalk |
+                          # cusdis | comentario | artalk
+
+    [params.comments.artalk]
+        serverUrl = ""
+        site      = ""
+
+    [params.comments.disqusjs]
+        shortname  = ""
+        apiUrl     = ""
+        apiKey     = ""
+        admin      = ""
+        adminLabel = ""
+
+    [params.comments.utterances]
+        repo      = ""
+        issueTerm = "pathname"
+        label     = ""
+
+    [params.comments.beaudar]
+        repo      = ""
+        issueTerm = "pathname"
+        label     = ""
+        theme     = ""
+
+    [params.comments.remark42]
+        host                    = ""
+        site                    = ""
+        locale                  = "en"
+        max_shown_comments      = 15
+        show_email_subscription = true
+
+    [params.comments.vssue]
+        platform        = ""
+        owner           = ""
+        repo            = ""
+        clientId        = ""
+        clientSecret    = ""
+        autoCreateIssue = false
+
+    [params.comments.waline]
+        serverURL    = ""
+        lang         = ""
+        pageview     = ""
+        emoji        = ["https://unpkg.com/@waline/emojis@1.0.1/weibo"]
+        requiredMeta = ["name", "email", "url"]
+
+        [params.comments.waline.locale]
+            admin       = "Admin"
+            placeholder = ""
+
+    [params.comments.twikoo]
+        envId  = ""
+        region = ""
+        path   = ""
+        lang   = ""
+
+    [params.comments.cactus]
+        defaultHomeserverUrl = "https://matrix.cactus.chat:8448"
+        serverName           = "cactus.chat"
+        siteName             = ""
+
+    [params.comments.giscus]
+        repo             = ""
+        repoID           = ""
+        category         = ""
+        categoryID       = ""
+        mapping          = "title"
+        lightTheme       = "light"
+        darkTheme        = "dark_dimmed"
+        reactionsEnabled = 1
+        emitMetadata     = 0
+        inputPosition    = "top"
+        lang             = "en"
+        strict           = 0
+        loading          = "lazy"
+
+    [params.comments.gitalk]
+        owner        = ""
+        admin        = ""
+        repo         = ""
+        clientID     = ""
+        clientSecret = ""
+        proxy        = ""
+
+    [params.comments.cusdis]
+        host = "https://cusdis.com"
+        id   = ""
+
+    [params.comments.comentario]
+        url                   = ""
+        autoInit              = false
+        autoNonInteractiveSso = false
+        cssOverride           = ""
+        lang                  = ""
+        liveUpdate            = false
+        maxLevel              = 0
+        noFonts               = false
+        theme                 = ""
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Navigation menu
+# ──────────────────────────────────────────────────────────────────────────────
+[[menu.main]]
+    identifier = "home"
+    name       = "Home"
+    url        = "/"
+    weight     = 1
+    [menu.main.params]
+        icon = "home"
 
 [[menu.main]]
-  identifier = "home"
-  name = "Home"
-  url = "/"
-  weight = 1
-  [menu.main.params]
-    icon = "home"
+    identifier = "blog"
+    name       = "Blog"
+    url        = "/blog/"
+    weight     = 2
+    [menu.main.params]
+        icon = "archives"
 
 [[menu.main]]
-  identifier = "blog"
-  name = "Blog"
-  url = "/blog/"
-  weight = 2
-  [menu.main.params]
-    icon = "archives"
+    identifier = "categories"
+    name       = "Categories"
+    url        = "/categories/"
+    weight     = 3
+    [menu.main.params]
+        icon = "hash"
 
-[[menu.main]]
-  identifier = "categories"
-  name = "Categories"
-  url = "/categories/"
-  weight = 3
-  [menu.main.params]
-    icon = "hash"
-
-# ── Social links ───────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Social links (sidebar)
+# ──────────────────────────────────────────────────────────────────────────────
+[[menu.social]]
+    identifier = "github"
+    name       = "GitHub"
+    url        = "https://github.com/usfkhoury"
+    weight     = 1
+    [menu.social.params]
+        icon = "brand-github"
 
 [[menu.social]]
-  identifier = "github"
-  name = "GitHub"
-  url = "https://github.com/usfkhoury"
-  weight = 1
-  [menu.social.params]
-    icon = "brand-github"
+    identifier = "instagram"
+    name       = "Instagram"
+    url        = "https://www.instagram.com/usfkhoury"
+    weight     = 2
+    [menu.social.params]
+        icon = "brand-instagram"
 
 [[menu.social]]
-  identifier = "instagram"
-  name = "Instagram"
-  url = "https://www.instagram.com/usfkhoury"
-  weight = 2
-  [menu.social.params]
-    icon = "brand-instagram"
+    identifier = "linkedin"
+    name       = "LinkedIn"
+    url        = "https://www.linkedin.com/in/youssef-el-khoury-124648155"
+    weight     = 3
+    [menu.social.params]
+        icon = "brand-linkedin"
 
 [[menu.social]]
-  identifier = "linkedin"
-  name = "LinkedIn"
-  url = "https://www.linkedin.com/in/youssef-el-khoury-124648155"
-  weight = 3
-  [menu.social.params]
-    icon = "brand-linkedin"
+    identifier = "telegram"
+    name       = "Telegram"
+    url        = "https://t.me/usfkhoury"
+    weight     = 4
+    [menu.social.params]
+        icon = "brand-telegram"
 
 [[menu.social]]
-  identifier = "telegram"
-  name = "Telegram"
-  url = "https://t.me/usfkhoury"
-  weight = 4
-  [menu.social.params]
-    icon = "brand-telegram"
-
-[[menu.social]]
-  identifier = "email"
-  name = "Email"
-  url = "mailto:usfkhouryy@gmail.com"
-  weight = 5
-  [menu.social.params]
-    icon = "mail"
+    identifier = "email"
+    name       = "Email"
+    url        = "mailto:usfkhouryy@gmail.com"
+    weight     = 5
+    [menu.social.params]
+        icon = "mail"
