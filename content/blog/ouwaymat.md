@@ -1,5 +1,5 @@
 ---
-title: "Yawmiyet Khebbez: Ouwaymat"
+title: "Ouwaymat"
 date: "2024-01-02T21:15:00Z"
 lastmod: "2026-05-17T03:01:00Z"
 tags: ["Sweets"]
