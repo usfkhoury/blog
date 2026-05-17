@@ -175,6 +175,22 @@ Set these secrets at **GitHub → repository → Settings → Secrets and variab
 
 The sync script retries automatically (up to 5 attempts with exponential back-off). If you see repeated 429 errors in the Actions log, your workspace may be hitting Notion's API limits — the hourly schedule means this is unlikely in practice.
 
+### Math formulas don't render on the site
+
+Two settings in `config.toml` must both be present:
+
+- `math = true` under `[params.article]` — loads KaTeX on article pages.
+- `["$", "$"]` in `[markup.goldmark.extensions.passthrough.delimiters]` inline list — tells Hugo's Markdown parser to leave `$...$` content untouched so KaTeX can render it.
+
+If either is missing, formulas will appear as raw LaTeX text or garbled Markdown. Supported syntax in Notion:
+
+| Style | Notion input | Example |
+|---|---|---|
+| Inline | `$...$` | `$E = mc^2$` |
+| Block | `$$...$$` on its own line | `$$\frac{a}{b}$$` |
+
+---
+
 ### The search page is broken
 
 The file `content/page/search/index.md` must exist and must contain:
