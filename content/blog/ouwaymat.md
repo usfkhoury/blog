@@ -1,7 +1,7 @@
 ---
 title: "Ouwaymat"
 date: "2024-01-02T21:15:00Z"
-lastmod: "2026-05-17T16:26:00Z"
+lastmod: "2026-05-17T16:36:00Z"
 tags: ["Sweets"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -32,22 +32,4 @@ notion_id: "20465621-402e-4633-bca3-c44cc077ef1b"
 
 1. Raye7oun chi se3ten la yenefkho
 2. 2liyoun
-
-# Ater (Syrup)
-
-
-| Ingredient | Weight | Volume  |
-| ---------- | ------ | ------- |
-| Sekar      |        | 2 cups  |
-| May        |        | 1 cup   |
-| Hamda      |        | nos     |
-| Mazaher    |        | chwayit |
-| Mawared    |        | chwayit |
-
-
-## Ater Prep
-
-1. Ghliyoun ma3 nos hamda la ma yeskaro
-2. Awwal ma yeghlo tfi 3anoun
-3. 7ot no2tit mazaher w mawared
-4. Trekoun yeberdo
+3. Nachefoun chway w 7otoun bl ater henne w sokhnin
