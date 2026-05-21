@@ -32,4 +32,4 @@ notion_id: "20465621-402e-4633-bca3-c44cc077ef1b"
 
 1. Raye7oun chi se3ten la yenefkho
 2. 2liyoun
-3. Nachefoun chway w 7otoun bl [ater](/blog/atersimple-syrup/) henne w sokhninn
+3. Nachefoun chway w 7otoun bl [ater](/blog/atersimple-syrup/) henne w sokhnin
