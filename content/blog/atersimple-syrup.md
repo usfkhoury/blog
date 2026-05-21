@@ -1,5 +1,6 @@
 ---
 title: "Ater/Simple Syrup"
+slug: "atersimple-syrup"
 date: "2024-01-02T20:57:00Z"
 lastmod: "2026-05-17T16:46:00Z"
 tags: ["References"]

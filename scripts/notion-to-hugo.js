@@ -98,6 +98,10 @@ function resolveNotionLinks(markdown, pageIdToSlug) {
 function buildFrontmatter(props) {
   const lines = ['---'];
   lines.push(`title: ${JSON.stringify(props.title)}`);
+  // Explicit slug prevents Hugo from deriving the URL from the title, which
+  // breaks when the title contains characters like '/' that Hugo treats as
+  // path separators (e.g. "Ater/Simple Syrup" → /blog/ater/simple-syrup/).
+  lines.push(`slug: "${props.slug}"`);
   lines.push(`date: "${props.date}"`);
   lines.push(`lastmod: "${props.lastmod}"`);
   if (props.description) lines.push(`description: ${JSON.stringify(props.description)}`);
