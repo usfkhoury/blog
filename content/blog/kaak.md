@@ -1,5 +1,6 @@
 ---
 title: "Kaak"
+slug: "kaak"
 date: "2024-03-23T22:40:00Z"
 lastmod: "2026-05-17T17:41:00Z"
 tags: ["Sweets"]

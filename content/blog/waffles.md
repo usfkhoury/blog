@@ -1,5 +1,6 @@
 ---
 title: "Waffles"
+slug: "waffles"
 date: "2023-12-19T20:43:00Z"
 lastmod: "2026-05-17T17:47:00Z"
 tags: ["Sweets"]

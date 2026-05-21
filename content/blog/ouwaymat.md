@@ -1,5 +1,6 @@
 ---
 title: "Ouwaymat"
+slug: "ouwaymat"
 date: "2024-01-02T21:15:00Z"
 lastmod: "2026-05-21T18:16:00Z"
 tags: ["Sweets"]

@@ -1,5 +1,6 @@
 ---
 title: "Understanding Dough Hydration Rates"
+slug: "understanding-dough-hydration-rates"
 date: "2026-05-17T12:54:00Z"
 lastmod: "2026-05-17T17:39:00Z"
 tags: ["References"]

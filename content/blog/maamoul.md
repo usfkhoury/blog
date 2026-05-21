@@ -1,5 +1,6 @@
 ---
 title: "Maamoul"
+slug: "maamoul"
 date: "2024-03-24T10:24:00Z"
 lastmod: "2026-05-17T17:41:00Z"
 tags: ["Sweets"]
