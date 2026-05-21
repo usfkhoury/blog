@@ -2,7 +2,7 @@ name: Sync Notion to Hugo
 
 on:
   schedule:
-    - cron: "0 * * * *"   # every hour
+    - cron: "*/15 * * * *"  # every 15 minutes
   workflow_dispatch:        # manual trigger via GitHub UI
 
 # Prevent two sync runs from overlapping. If a run is already in progress,

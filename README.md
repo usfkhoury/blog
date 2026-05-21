@@ -9,7 +9,7 @@ Personal blog at **[usfkhoury.com](https://usfkhoury.com)** documenting Lebanese
 ```
 Notion (write here)
     │
-    │  GitHub Action runs every hour
+    │  GitHub Action runs every 15 minutes
     ▼
 scripts/notion-to-hugo.js   ← fetches published pages, writes Markdown files
     │
@@ -36,7 +36,7 @@ usfkhoury.com               ← live site
 ```
 blog/
 ├── .github/workflows/
-│   └── notion-sync.yml     GitHub Action: runs sync every hour
+│   └── notion-sync.yml     GitHub Action: runs sync every 15 minutes
 ├── archetypes/
 │   └── default.md          Template for new hand-written posts (hugo new)
 ├── assets/
@@ -73,7 +73,7 @@ blog/
    - **Date** — when the post was created (optional; defaults to the page creation date).
    - **Slug** — optional; the URL-friendly filename (e.g. `chocolate-cake`). If left blank, it is generated from the title.
 4. When the post is ready, check the **Published** checkbox.
-5. The site updates automatically within the hour. To publish immediately, trigger a [manual sync](#triggering-a-manual-sync).
+5. The site updates automatically within 15 minutes. To publish immediately, trigger a [manual sync](#triggering-a-manual-sync).
 
 ---
 
@@ -173,7 +173,7 @@ Set these secrets at **GitHub → repository → Settings → Secrets and variab
 
 ### Notion API rate limit errors
 
-The sync script retries automatically (up to 5 attempts with exponential back-off). If you see repeated 429 errors in the Actions log, your workspace may be hitting Notion's API limits — the hourly schedule means this is unlikely in practice.
+The sync script retries automatically (up to 5 attempts with exponential back-off). If you see repeated 429 errors in the Actions log, your workspace may be hitting Notion's API limits — the 15-minute schedule means this is unlikely in practice.
 
 ### Math formulas don't render on the site
 
