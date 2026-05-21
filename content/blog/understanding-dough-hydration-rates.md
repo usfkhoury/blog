@@ -1,7 +1,8 @@
 ---
 title: "Understanding Dough Hydration Rates"
+slug: "understanding-dough-hydration-rates"
 date: "2026-05-17T12:54:00Z"
-lastmod: "2026-05-17T17:39:00Z"
+lastmod: "2026-05-21T18:33:00Z"
 tags: ["References"]
 categories: ["Yawmiyet Khebbez"]
 draft: false
@@ -15,7 +16,7 @@ notion_id: "363c46dc-1998-81ca-bb83-cc08a66ed167"
 ---
 
 
-## What Is a Hydration Rate?
+# What Is a Hydration Rate?
 
 
 The **hydration rate** is the ratio of water to flour in a dough, expressed as a percentage:
@@ -33,7 +34,7 @@ This number tells you everything about how a dough will feel and behave — how 
 ---
 
 
-## Why Volume Measurements Break the Formula
+# Why Volume Measurements Break the Formula
 
 
 This is where most beginners go wrong. It seems logical to measure hydration by volume — "1 cup of water to 3 cups of flour" — but it produces a completely wrong result.
@@ -52,7 +53,7 @@ The problem is **density**. One cup of water and one cup of flour weigh very dif
 Notice that 1 cup of water weighs almost **twice as much** as 1 cup of flour. This completely distorts any volume-based hydration calculation.
 
 
-### The Bread Example
+## The Bread Example
 
 
 Take a recipe: 1 cup water, 3 cups flour.

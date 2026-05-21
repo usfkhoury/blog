@@ -1,5 +1,6 @@
 ---
 title: "Focaccia"
+slug: "focaccia"
 date: "2024-03-22T10:19:00Z"
 lastmod: "2026-05-17T17:47:00Z"
 tags: ["Bread"]

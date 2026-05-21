@@ -1,5 +1,6 @@
 ---
 title: "Crepe"
+slug: "crepe"
 date: "2023-12-19T23:10:00Z"
 lastmod: "2026-05-17T17:47:00Z"
 tags: ["Sweets"]
