@@ -97,7 +97,7 @@ enableRobotsTXT = true
     # Emoji displayed next to the avatar
     emoji    = ""
     # Avatar: full URL (remote) or assets/-relative path (local, e.g. "img/avatar.png")
-    avatar   = "https://usfkhoury.com/images/main/logo.jpg"
+    avatar   = "https://blog.usfkhoury.com/images/main/logo.jpg"
 
 [params.article]
     headingAnchor = false
