@@ -1,6 +1,6 @@
-# usfkhoury.com — Personal Blog
+# blog.usfkhoury.com — Personal Blog
 
-Personal blog at **[usfkhoury.com](https://usfkhoury.com)** documenting Lebanese home-cooking and baking. Posts are written in [Notion](https://notion.so) and automatically published to the site.
+Personal blog at **[blog.usfkhoury.com](https://blog.usfkhoury.com)** documenting Lebanese home-cooking and baking. Posts are written in [Notion](https://notion.so) and automatically published to the site.
 
 ---
 
@@ -19,7 +19,7 @@ content/blog/*.md           ← Hugo source files
     │
     │  workflow calls Netlify deploy hook, runs `hugo --gc --minify`
     ▼
-usfkhoury.com               ← live site
+blog.usfkhoury.com          ← live site
 ```
 
 | Layer | Tool | Config file |
@@ -27,7 +27,7 @@ usfkhoury.com               ← live site
 | Content authoring | Notion | your Notion workspace |
 | Sync pipeline | Node.js script + GitHub Actions | `scripts/`, `.github/workflows/notion-sync.yml` |
 | Static site generator | Hugo 0.161.1 + Stack theme | `config.toml`, `netlify.toml` |
-| Hosting | Netlify | `netlify.toml` |
+| Hosting | Netlify (blog.usfkhoury.com) | `netlify.toml` |
 
 ---
 
