@@ -1,7 +1,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # Hugo base
 # ──────────────────────────────────────────────────────────────────────────────
-baseurl                = "https://usfkhoury.com/"
+baseurl                = "https://blog.usfkhoury.com/"
 languageCode           = "en-us"
 defaultContentLanguage = "en"
 # Set to true if your default language uses CJK characters

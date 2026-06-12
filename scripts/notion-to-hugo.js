@@ -1,4 +1,9 @@
-const { Client, APIResponseError } = require('@notionhq/client');
+const {
+  Client,
+  APIResponseError,
+  UnknownHTTPResponseError,
+  RequestTimeoutError,
+} = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
 const fs = require('fs');
 const path = require('path');
@@ -10,6 +15,8 @@ const CONTENT_DIR = path.resolve(__dirname, '..', 'content', 'blog');
 // Marker written into frontmatter so we can distinguish Notion-synced files
 // from hand-written posts and only delete the former when they go unpublished.
 const NOTION_ID_KEY = 'notion_id';
+// Polite delay between per-page content fetches (Notion allows ~3 req/s).
+const PAGE_FETCH_DELAY_MS = 200;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -19,26 +26,38 @@ function sleep(ms) {
 
 /**
  * Wraps a Notion API call with exponential-backoff retry logic.
- * Retries on rate-limit (429) and transient server errors (5xx).
+ * Retries on rate-limit (429), server errors (5xx) and request timeouts.
+ * 5xx responses with a non-API-shaped body arrive as UnknownHTTPResponseError,
+ * not APIResponseError, so both must be matched.
  */
 async function withRetry(fn, { retries = 5, baseDelayMs = 1000 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       return await fn();
     } catch (err) {
-      const isRateLimit  = err instanceof APIResponseError && err.status === 429;
-      const isServerErr  = err instanceof APIResponseError && err.status >= 500;
+      const isHttpErr =
+        err instanceof APIResponseError || err instanceof UnknownHTTPResponseError;
+      const isRateLimit = isHttpErr && err.status === 429;
+      const isServerErr = isHttpErr && err.status >= 500;
+      const isTimeout = err instanceof RequestTimeoutError;
       const isLastAttempt = attempt === retries;
 
-      if ((!isRateLimit && !isServerErr) || isLastAttempt) throw err;
+      if ((!isRateLimit && !isServerErr && !isTimeout) || isLastAttempt) throw err;
 
-      // Respect Retry-After header if present, otherwise use exponential backoff
-      const retryAfterMs = err.headers?.['retry-after']
-        ? Number(err.headers['retry-after']) * 1000
-        : baseDelayMs * Math.pow(2, attempt);
+      // err.headers is a fetch Headers object, so it must be read with .get();
+      // bracket access on it always returns undefined.
+      const retryAfterRaw =
+        typeof err.headers?.get === 'function'
+          ? err.headers.get('retry-after')
+          : err.headers?.['retry-after'];
+      const retryAfterSec = Number(retryAfterRaw);
+      const retryAfterMs =
+        retryAfterRaw && Number.isFinite(retryAfterSec) && retryAfterSec > 0
+          ? retryAfterSec * 1000
+          : baseDelayMs * 2 ** attempt;
 
       console.warn(
-        `Notion API ${err.status} on attempt ${attempt + 1}/${retries + 1}. ` +
+        `Notion API error (${err.status ?? err.name}) on attempt ${attempt + 1}/${retries + 1}. ` +
         `Retrying in ${Math.round(retryAfterMs / 1000)}s…`
       );
       await sleep(retryAfterMs);
@@ -55,7 +74,11 @@ function slugify(text) {
 }
 
 function isoDate(str) {
-  const d = str ? new Date(str) : new Date();
+  let d = str ? new Date(str) : new Date();
+  if (Number.isNaN(d.getTime())) {
+    console.warn(`  Invalid date "${str}" — falling back to current time.`);
+    d = new Date();
+  }
   // Hugo's time.RFC3339 parser rejects milliseconds — strip sub-second part.
   return d.toISOString().replace(/\.\d{3}Z$/, 'Z');
 }
@@ -96,19 +119,22 @@ function resolveNotionLinks(markdown, pageIdToSlug) {
 }
 
 function buildFrontmatter(props) {
+  // Every value goes through JSON.stringify: a JSON string is a valid YAML
+  // double-quoted scalar, so quotes/newlines in Notion data can't break the
+  // frontmatter or inject extra keys.
   const lines = ['---'];
   lines.push(`title: ${JSON.stringify(props.title)}`);
   // Explicit slug prevents Hugo from deriving the URL from the title, which
   // breaks when the title contains characters like '/' that Hugo treats as
   // path separators (e.g. "Ater/Simple Syrup" → /blog/ater/simple-syrup/).
-  lines.push(`slug: "${props.slug}"`);
-  lines.push(`date: "${props.date}"`);
-  lines.push(`lastmod: "${props.lastmod}"`);
+  lines.push(`slug: ${JSON.stringify(props.slug)}`);
+  lines.push(`date: ${JSON.stringify(props.date)}`);
+  lines.push(`lastmod: ${JSON.stringify(props.lastmod)}`);
   if (props.description) lines.push(`description: ${JSON.stringify(props.description)}`);
   if (props.tags.length)       lines.push(`tags: [${props.tags.map(t => JSON.stringify(t)).join(', ')}]`);
   if (props.categories.length) lines.push(`categories: [${props.categories.map(c => JSON.stringify(c)).join(', ')}]`);
   lines.push(`draft: false`);
-  lines.push(`${NOTION_ID_KEY}: "${props.pageId}"`);
+  lines.push(`${NOTION_ID_KEY}: ${JSON.stringify(props.pageId)}`);
   lines.push('---');
   return lines.join('\n') + '\n\n';
 }
@@ -152,14 +178,15 @@ function extractProps(page) {
   const titleProp = Object.values(p).find(v => v.type === 'title');
   const title = titleProp ? richText(titleProp.title) : 'Untitled';
 
-  // Slug — explicit Slug property takes priority, falls back to slugified title.
-  // If slugification yields an empty string (e.g. all non-ASCII title), fall
-  // back to the first 8 characters of the page ID so the filename is stable.
+  // Slug — explicit Slug property takes priority, falls back to the title.
+  // Both pass through slugify: the slug becomes the output filename and a
+  // YAML value, so it must stay within [a-z0-9-] (no path separators, no
+  // quotes). If slugification yields an empty string (e.g. all non-ASCII
+  // input), fall back to the first 8 characters of the page ID so the
+  // filename is stable.
   const slugProp = p['Slug'];
-  const slug =
-    slugProp?.rich_text?.length
-      ? richText(slugProp.rich_text)
-      : slugify(title) || page.id.replace(/-/g, '').slice(0, 8);
+  const explicitSlug = slugProp?.rich_text?.length ? richText(slugProp.rich_text) : '';
+  const slug = slugify(explicitSlug || title) || page.id.replace(/-/g, '').slice(0, 8);
 
   // Date — explicit Date property, then Created, then page created_time
   const dateProp = p['Date'] ?? p['Created'];
@@ -191,10 +218,14 @@ function extractProps(page) {
 // ─── File helpers ─────────────────────────────────────────────────────────────
 
 // Returns the notion_id value from a file's frontmatter, or null if absent.
+// Only the leading frontmatter block is searched so a "notion_id:" line in a
+// hand-written post's body can never be mistaken for the marker.
 function readNotionId(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
-    const match = content.match(/^notion_id:\s*"?([^"\n]+)"?/m);
+    const fm = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    if (!fm) return null;
+    const match = fm[1].match(/^notion_id:\s*"?([^"\r\n]+)"?\s*$/m);
     return match ? match[1].trim() : null;
   } catch {
     return null;
@@ -210,17 +241,27 @@ function readNotionId(filePath) {
 async function fetchDatabasePages(databaseId, syncedPageIds) {
   const [pages, dbTitle] = await Promise.all([
     getPublishedPages(databaseId),
-    getDatabaseTitle(databaseId),
+    // The title is only used as a tag — don't fail the whole sync over it.
+    getDatabaseTitle(databaseId).catch(err => {
+      console.warn(
+        `Could not fetch title for database ${databaseId} (${err.message}); ` +
+        `posts will sync without a database tag.`
+      );
+      return '';
+    }),
   ]);
   console.log(`Found ${pages.length} published page(s) in Notion database "${dbTitle}".`);
 
   const items = [];
   for (const page of pages) {
+    // Mark the page as synced before extraction: the page IS published, so an
+    // extraction failure must not let the cleanup pass delete its existing
+    // file as "unpublished".
+    syncedPageIds.add(page.id);
     try {
       const props = extractProps(page);
       // Inject the database name as a tag so posts are tagged by their source database
       if (dbTitle && !props.tags.includes(dbTitle)) props.tags.push(dbTitle);
-      syncedPageIds.add(page.id);
       items.push({ page, props });
     } catch (err) {
       console.error(`  Skipping page ${page.id}: failed to extract properties — ${err.message}`);
@@ -233,6 +274,7 @@ async function fetchDatabasePages(databaseId, syncedPageIds) {
 
 // Fetches and converts the Markdown content for one page, resolves internal
 // Notion links using the pre-built map, then writes the final file.
+// Returns the filename written, or null if the page had to be skipped.
 async function syncPageContent(page, props, pageIdToSlug) {
   console.log(`  Syncing: "${props.title}" → ${props.slug}.md`);
 
@@ -247,14 +289,12 @@ async function syncPageContent(page, props, pageIdToSlug) {
     body = resolveNotionLinks(body, pageIdToSlug);
   } catch (err) {
     console.error(`  Skipping page ${page.id}: failed to convert to Markdown — ${err.message}`);
-    return;
+    return null;
   }
 
-  const filePath = path.join(CONTENT_DIR, `${props.slug}.md`);
-  fs.writeFileSync(filePath, buildFrontmatter(props) + body, 'utf8');
-
-  // Small polite delay between page fetches to avoid hammering the API
-  await sleep(200);
+  const filename = `${props.slug}.md`;
+  fs.writeFileSync(path.join(CONTENT_DIR, filename), buildFrontmatter(props) + body, 'utf8');
+  return filename;
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -263,11 +303,14 @@ async function main() {
   if (!process.env.NOTION_TOKEN)       throw new Error('NOTION_TOKEN is not set');
   if (!process.env.NOTION_DATABASE_ID) throw new Error('NOTION_DATABASE_ID is not set');
 
-  // Support a single ID or a comma-separated list of IDs
-  const databaseIds = process.env.NOTION_DATABASE_ID
-    .split(',')
-    .map(id => id.trim())
-    .filter(Boolean);
+  // Support a single ID or a comma-separated list of IDs (deduplicated, so a
+  // repeated ID in the list can't sync the same database twice).
+  const databaseIds = [...new Set(
+    process.env.NOTION_DATABASE_ID
+      .split(',')
+      .map(id => id.trim())
+      .filter(Boolean)
+  )];
 
   fs.mkdirSync(CONTENT_DIR, { recursive: true });
 
@@ -282,24 +325,53 @@ async function main() {
     allItems.push(...items);
   }
 
+  // Two pages can resolve to the same slug (same title, or duplicated explicit
+  // Slug). The second would silently overwrite the first's file, so suffix it
+  // with a page-ID prefix instead. Done before building the link map so
+  // internal links resolve to the final slugs.
+  const usedSlugs = new Set();
+  for (const { page, props } of allItems) {
+    if (usedSlugs.has(props.slug)) {
+      const unique = `${props.slug}-${page.id.replace(/-/g, '').slice(0, 8)}`;
+      console.warn(`Slug collision on "${props.slug}" — writing page ${page.id} as "${unique}".`);
+      props.slug = unique;
+    }
+    usedSlugs.add(props.slug);
+  }
+
   const pageIdToSlug = new Map(
     allItems.map(({ page, props }) => [normalizePageId(page.id), props.slug])
   );
 
   // Pass 2: fetch and write content for every page, resolving internal links.
+  // Track which filename each page was written to so the cleanup pass can
+  // remove a stale file when a page's slug changed.
+  const writtenFilenameByPageId = new Map();
   for (const { page, props } of allItems) {
-    await syncPageContent(page, props, pageIdToSlug);
+    const filename = await syncPageContent(page, props, pageIdToSlug);
+    if (filename) writtenFilenameByPageId.set(page.id, filename);
+    await sleep(PAGE_FETCH_DELAY_MS);
   }
 
-  // Delete files that were previously synced from Notion but are no longer published.
-  // We identify Notion-synced files by the presence of the notion_id frontmatter key,
-  // so hand-written posts without that key are never touched.
+  // Delete files that were previously synced from Notion but are no longer
+  // published, plus files left behind under an old slug. We identify
+  // Notion-synced files by the notion_id frontmatter key, so hand-written
+  // posts without that key are never touched. Pages whose content fetch
+  // failed this run keep their existing file (they're in syncedPageIds but
+  // have no entry in writtenFilenameByPageId).
   const existing = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
   for (const filename of existing) {
     const filePath = path.join(CONTENT_DIR, filename);
     const notionId = readNotionId(filePath);
-    if (notionId && !syncedPageIds.has(notionId)) {
+    if (!notionId) continue;
+    if (!syncedPageIds.has(notionId)) {
       console.log(`Removing unpublished: ${filename}`);
+      fs.unlinkSync(filePath);
+      continue;
+    }
+    const currentFilename = writtenFilenameByPageId.get(notionId);
+    if (currentFilename && currentFilename !== filename) {
+      console.log(`Removing stale slug: ${filename} (now ${currentFilename})`);
       fs.unlinkSync(filePath);
     }
   }
