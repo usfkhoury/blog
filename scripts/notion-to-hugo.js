@@ -5,6 +5,7 @@ const {
   RequestTimeoutError,
 } = require('@notionhq/client');
 const { NotionToMarkdown } = require('notion-to-md');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
@@ -12,6 +13,12 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 const CONTENT_DIR = path.resolve(__dirname, '..', 'content', 'blog');
+// Notion-hosted images are downloaded here (committed to the repo) because
+// the URLs the API returns are signed S3 links that expire after ~1 hour —
+// hotlinking them would break on the live site AND produce a different URL
+// every sync, causing a commit + deploy every 15 minutes.
+const IMAGE_DIR = path.resolve(__dirname, '..', 'static', 'images', 'notion');
+const IMAGE_URL_PREFIX = '/images/notion';
 // Marker written into frontmatter so we can distinguish Notion-synced files
 // from hand-written posts and only delete the former when they go unpublished.
 const NOTION_ID_KEY = 'notion_id';
@@ -138,6 +145,55 @@ function buildFrontmatter(props) {
   lines.push('---');
   return lines.join('\n') + '\n\n';
 }
+
+// ─── Image handling ───────────────────────────────────────────────────────────
+
+// Downloads a Notion-hosted image to IMAGE_DIR and returns its filename.
+// The name is keyed on block ID + a hash of the block's last-edited time:
+// stable across syncs (the signed URL changes on every fetch, the block ID
+// doesn't), but a replaced image gets a new name so it can't go stale.
+// Already-downloaded files are reused without refetching.
+async function downloadNotionImage(block) {
+  const url = block.image.file.url;
+  const extRaw = path.extname(new URL(url).pathname).toLowerCase();
+  const ext = /^\.[a-z0-9]{1,5}$/.test(extRaw) ? extRaw : '.png';
+  const stamp = crypto
+    .createHash('sha1')
+    .update(block.last_edited_time || '')
+    .digest('hex')
+    .slice(0, 8);
+  const filename = `${block.id.replace(/-/g, '')}-${stamp}${ext}`;
+  const filePath = path.join(IMAGE_DIR, filename);
+  if (fs.existsSync(filePath)) return filename;
+
+  const attempts = 3;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status} downloading image`);
+      fs.writeFileSync(filePath, Buffer.from(await res.arrayBuffer()));
+      console.log(`  Downloaded image: ${filename}`);
+      return filename;
+    } catch (err) {
+      if (attempt === attempts) throw err;
+      console.warn(`  Image download failed (${err.message}), retrying…`);
+      await sleep(1000 * attempt);
+    }
+  }
+}
+
+// Replace notion-to-md's default image rendering, which would emit the
+// expiring signed URL. External (non-Notion-hosted) images keep their URL.
+// A download failure throws, so syncPageContent skips the page and the
+// previous version of its file is kept — same policy as a failed page fetch.
+n2m.setCustomTransformer('image', async (block) => {
+  const img = block.image;
+  if (!img) return false; // fall back to default rendering
+  const alt = richText(img.caption).replace(/[\n[\]]/g, ' ').trim();
+  if (img.type === 'external') return `![${alt}](${img.external.url})`;
+  const filename = await downloadNotionImage(block);
+  return `![${alt}](${IMAGE_URL_PREFIX}/${filename})`;
+});
 
 // ─── Notion API wrappers ──────────────────────────────────────────────────────
 
@@ -313,6 +369,9 @@ async function main() {
   )];
 
   fs.mkdirSync(CONTENT_DIR, { recursive: true });
+  // Always created, even when no post has images yet — the sync workflow's
+  // `git add static/images/notion/` errors on a missing path.
+  fs.mkdirSync(IMAGE_DIR, { recursive: true });
 
   const syncedPageIds = new Set();
   const allItems = [];

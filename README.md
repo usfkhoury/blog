@@ -48,10 +48,12 @@ blog/
 ├── scripts/
 │   ├── notion-to-hugo.js   Sync script
 │   ├── package.json        Node dependencies
+│   ├── package-lock.json   Locked dependency versions (CI installs with npm ci)
 │   └── .gitignore          Excludes node_modules/
 ├── static/
-│   └── images/main/
-│       └── logo.jpg        Avatar image shown in the sidebar
+│   ├── images/main/
+│   │   └── logo.jpg        Avatar image shown in the sidebar
+│   └── images/notion/      Images downloaded from Notion by the sync script
 ├── themes/
 │   └── hugo-theme-stack/   Theme (git submodule — do not edit directly)
 ├── .gitattributes          Forces LF line endings for shell scripts and .notion-databases
@@ -74,6 +76,11 @@ blog/
    - **Slug** — optional; the URL-friendly filename (e.g. `chocolate-cake`). If left blank, it is generated from the title.
 4. When the post is ready, check the **Published** checkbox.
 5. The site updates automatically within 15 minutes. To publish immediately, trigger a [manual sync](#triggering-a-manual-sync).
+
+Images uploaded to Notion are handled automatically: the sync script downloads
+them into `static/images/notion/` and rewrites the post to reference the local
+copy (Notion's own image URLs expire after about an hour, so they are never
+used directly). Externally-hosted images (pasted as a link) keep their URL.
 
 ---
 
@@ -124,7 +131,7 @@ The sync runs and, if anything changed, commits to `main` and calls the Netlify 
 
 ```bash
 cd scripts
-npm install
+npm ci
 
 export NOTION_TOKEN="secret_…"
 export NOTION_DATABASE_ID="$(grep -v '^\s*#' ../.notion-databases | grep -v '^\s*$' | tr -d '\r' | tr '\n' ',' | sed 's/,$//')"
