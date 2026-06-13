@@ -1,0 +1,5 @@
+# Hugo build artifacts (local `hugo` / `hugo server` runs)
+public/
+resources/
+.hugo_build.lock
+assets/jsconfig.json

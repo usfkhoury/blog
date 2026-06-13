@@ -55,6 +55,9 @@ jobs:
             echo "pushed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "chore: sync posts from Notion [skip ci]"
+            # main may have advanced since checkout (e.g. a hand-written post
+            # pushed mid-run) — rebase the sync commit on top instead of failing.
+            git pull --rebase origin main
             git push
             echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi

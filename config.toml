@@ -65,12 +65,6 @@ enableRobotsTXT = true
     ]
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Disqus (leave shortname empty to disable)
-# ──────────────────────────────────────────────────────────────────────────────
-[services.disqus]
-    shortname = ""
-
-# ──────────────────────────────────────────────────────────────────────────────
 # Theme params
 # ──────────────────────────────────────────────────────────────────────────────
 [params]
@@ -178,109 +172,12 @@ enableRobotsTXT = true
         functional = true
 
 # ── Comments ──────────────────────────────────────────────────────────────────
-# Set enabled = true and pick one provider below, then fill in its section.
+# Disabled. To enable: set enabled = true, set provider (disqus, utterances,
+# giscus, …) and add that provider's settings here — full list of providers
+# and their options: https://stack.jimmycai.com/config/comments
 [params.comments]
     enabled  = false
-    provider = "disqus"   # disqus | disqusjs | utterances | beaudar | remark42 |
-                          # vssue | waline | twikoo | cactus | giscus | gitalk |
-                          # cusdis | comentario | artalk
-
-    [params.comments.artalk]
-        serverUrl = ""
-        site      = ""
-
-    [params.comments.disqusjs]
-        shortname  = ""
-        apiUrl     = ""
-        apiKey     = ""
-        admin      = ""
-        adminLabel = ""
-
-    [params.comments.utterances]
-        repo      = ""
-        issueTerm = "pathname"
-        label     = ""
-
-    [params.comments.beaudar]
-        repo      = ""
-        issueTerm = "pathname"
-        label     = ""
-        theme     = ""
-
-    [params.comments.remark42]
-        host                    = ""
-        site                    = ""
-        locale                  = "en"
-        max_shown_comments      = 15
-        show_email_subscription = true
-
-    [params.comments.vssue]
-        platform        = ""
-        owner           = ""
-        repo            = ""
-        clientId        = ""
-        clientSecret    = ""
-        autoCreateIssue = false
-
-    [params.comments.waline]
-        serverURL    = ""
-        lang         = ""
-        pageview     = ""
-        emoji        = ["https://unpkg.com/@waline/emojis@1.0.1/weibo"]
-        requiredMeta = ["name", "email", "url"]
-
-        [params.comments.waline.locale]
-            admin       = "Admin"
-            placeholder = ""
-
-    [params.comments.twikoo]
-        envId  = ""
-        region = ""
-        path   = ""
-        lang   = ""
-
-    [params.comments.cactus]
-        defaultHomeserverUrl = "https://matrix.cactus.chat:8448"
-        serverName           = "cactus.chat"
-        siteName             = ""
-
-    [params.comments.giscus]
-        repo             = ""
-        repoID           = ""
-        category         = ""
-        categoryID       = ""
-        mapping          = "title"
-        lightTheme       = "light"
-        darkTheme        = "dark_dimmed"
-        reactionsEnabled = 1
-        emitMetadata     = 0
-        inputPosition    = "top"
-        lang             = "en"
-        strict           = 0
-        loading          = "lazy"
-
-    [params.comments.gitalk]
-        owner        = ""
-        admin        = ""
-        repo         = ""
-        clientID     = ""
-        clientSecret = ""
-        proxy        = ""
-
-    [params.comments.cusdis]
-        host = "https://cusdis.com"
-        id   = ""
-
-    [params.comments.comentario]
-        url                   = ""
-        autoInit              = false
-        autoNonInteractiveSso = false
-        cssOverride           = ""
-        lang                  = ""
-        liveUpdate            = false
-        maxLevel              = 0
-        noFonts               = false
-        theme                 = ""
+    provider = ""
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Navigation menu
